@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trabalhofinalbd2/app/globals/store/globals_store.dart';
+import 'package:trabalhofinalbd2/app/graficos/store/graficos_store.dart';
 import 'package:trabalhofinalbd2/app/home/home_page.dart';
 import 'package:trabalhofinalbd2/app/home/store/home_page_store.dart';
 import 'package:trabalhofinalbd2/app/requisicaoInsercao/store/requisicao_insercao_store.dart';
@@ -25,6 +26,9 @@ class MyApp extends StatelessWidget {
         ),
         Provider<GlobalsStore>(
           create: (_) => GlobalsStore(),
+        ),
+        Provider<GraficosStore>(
+          create: (_) => GraficosStore(),
         ),
       ],
       child: MaterialApp(
