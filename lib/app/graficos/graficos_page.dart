@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
 import 'package:trabalhofinalbd2/app/globals/globals_widgets.dart';
+import 'package:trabalhofinalbd2/app/graficos/graficos_functions.dart';
+import 'package:trabalhofinalbd2/app/graficos/graficos_widgets.dart';
+import 'package:trabalhofinalbd2/app/graficos/store/graficos_store.dart';
 
 class GraficosPage extends StatefulWidget {
   const GraficosPage({Key? key}) : super(key: key);
@@ -9,24 +14,46 @@ class GraficosPage extends StatefulWidget {
 }
 
 class _GraficosPageState extends State<GraficosPage> {
+  Future carregaDados() async {
+    final graficosStore = Provider.of<GraficosStore>(context, listen: false);
+    await GraficosFunctions(context).getDadosGraficos();
+
+    graficosStore.setPieData();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    carregaDados();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final graficosStoreT = Provider.of<GraficosStore>(context, listen: true);
     return SafeArea(
-      child: Scaffold(
-        body: Column(
-          children: [
-            SizedBox(
-              height: 10,
-            ),
-            GlobalsWidgets(context).appBar(),
-            SizedBox(
-              height: 20,
-            ),
-            SingleChildScrollView(
-              child: Container(),
-            ),
-          ],
-        ),
+      child: Observer(
+        builder: (_) {
+          return Scaffold(
+            body: graficosStoreT.carregandoPagina
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Column(
+                    children: [
+                      SizedBox(
+                        height: 10,
+                      ),
+                      GlobalsWidgets(context).appBar(),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        child: GraficosWidgets(context).corpoGraficos(),
+                      ),
+                    ],
+                  ),
+          );
+        },
       ),
     );
   }
