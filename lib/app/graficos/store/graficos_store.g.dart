@@ -39,6 +39,81 @@ mixin _$GraficosStore on _GraficosStore, Store {
     });
   }
 
+  final _$pieDataAtom = Atom(name: '_GraficosStore.pieData');
+
+  @override
+  dynamic get pieData {
+    _$pieDataAtom.reportRead();
+    return super.pieData;
+  }
+
+  @override
+  set pieData(dynamic value) {
+    _$pieDataAtom.reportWrite(value, super.pieData, () {
+      super.pieData = value;
+    });
+  }
+
+  final _$mapAtom = Atom(name: '_GraficosStore.map');
+
+  @override
+  Map<dynamic, dynamic> get map {
+    _$mapAtom.reportRead();
+    return super.map;
+  }
+
+  @override
+  set map(Map<dynamic, dynamic> value) {
+    _$mapAtom.reportWrite(value, super.map, () {
+      super.map = value;
+    });
+  }
+
+  final _$jsonMapAuxAtom = Atom(name: '_GraficosStore.jsonMapAux');
+
+  @override
+  dynamic get jsonMapAux {
+    _$jsonMapAuxAtom.reportRead();
+    return super.jsonMapAux;
+  }
+
+  @override
+  set jsonMapAux(dynamic value) {
+    _$jsonMapAuxAtom.reportWrite(value, super.jsonMapAux, () {
+      super.jsonMapAux = value;
+    });
+  }
+
+  final _$jsonMapFinalAtom = Atom(name: '_GraficosStore.jsonMapFinal');
+
+  @override
+  String get jsonMapFinal {
+    _$jsonMapFinalAtom.reportRead();
+    return super.jsonMapFinal;
+  }
+
+  @override
+  set jsonMapFinal(String value) {
+    _$jsonMapFinalAtom.reportWrite(value, super.jsonMapFinal, () {
+      super.jsonMapFinal = value;
+    });
+  }
+
+  final _$listaSeriesAtom = Atom(name: '_GraficosStore.listaSeries');
+
+  @override
+  List<charts.Series<DadosGrafico, String>> get listaSeries {
+    _$listaSeriesAtom.reportRead();
+    return super.listaSeries;
+  }
+
+  @override
+  set listaSeries(List<charts.Series<DadosGrafico, String>> value) {
+    _$listaSeriesAtom.reportWrite(value, super.listaSeries, () {
+      super.listaSeries = value;
+    });
+  }
+
   final _$_GraficosStoreActionController =
       ActionController(name: '_GraficosStore');
 
@@ -65,10 +140,48 @@ mixin _$GraficosStore on _GraficosStore, Store {
   }
 
   @override
+  void setPieData() {
+    final _$actionInfo = _$_GraficosStoreActionController.startAction(
+        name: '_GraficosStore.setPieData');
+    try {
+      return super.setPieData();
+    } finally {
+      _$_GraficosStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void addListaTiposDados(dynamic _value) {
+    final _$actionInfo = _$_GraficosStoreActionController.startAction(
+        name: '_GraficosStore.addListaTiposDados');
+    try {
+      return super.addListaTiposDados(_value);
+    } finally {
+      _$_GraficosStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setMap() {
+    final _$actionInfo = _$_GraficosStoreActionController.startAction(
+        name: '_GraficosStore.setMap');
+    try {
+      return super.setMap();
+    } finally {
+      _$_GraficosStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 carregandoPagina: ${carregandoPagina},
-jsonGraficos: ${jsonGraficos}
+jsonGraficos: ${jsonGraficos},
+pieData: ${pieData},
+map: ${map},
+jsonMapAux: ${jsonMapAux},
+jsonMapFinal: ${jsonMapFinal},
+listaSeries: ${listaSeries}
     ''';
   }
 }

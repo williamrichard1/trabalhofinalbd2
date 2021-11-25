@@ -11,6 +11,8 @@ class GraficosStore = _GraficosStore with _$GraficosStore;
 abstract class _GraficosStore with Store {
   ObservableList listaTiposDeDados = ObservableList();
 
+  ObservableList listaJsonMap = ObservableList();
+
   @observable
   bool carregandoPagina = true;
 
@@ -23,6 +25,12 @@ abstract class _GraficosStore with Store {
   @observable
   var map = {};
 
+  @observable
+  dynamic jsonMapAux;
+
+  @observable
+  String jsonMapFinal = '';
+
   @action
   void setCarregandoPagina(_value) => carregandoPagina = _value;
 
@@ -30,61 +38,49 @@ abstract class _GraficosStore with Store {
   void setJsonGraficos(_value) => jsonGraficos = _value;
 
   @observable
-  List<charts.Series<Task, String>> listaSeries =
-      <charts.Series<Task, String>>[];
+  List<charts.Series<DadosGrafico, String>> listaSeries =
+      <charts.Series<DadosGrafico, String>>[];
 
   @action
   void setPieData() {
     pieData = [
-      Task(
+      DadosGrafico(
           'Sem modalidade definida',
           double.parse('${listaJsonMap[0]['Sem modalidade definida']}'),
           Colors.red),
-      Task(
+      DadosGrafico(
           'Pregão presencial',
           double.parse('${listaJsonMap[0]['Pregão presencial']}'),
           Colors.yellow),
-      Task(
+      DadosGrafico(
           'Chamamento público',
           double.parse('${listaJsonMap[0]['Chamamento público']}'),
           Colors.blue),
-      Task('Concorrência', double.parse('${listaJsonMap[0]['Concorrência']}'),
-          Colors.purple),
-      Task('Inexigibilidade',
+      DadosGrafico('Concorrência',
+          double.parse('${listaJsonMap[0]['Concorrência']}'), Colors.purple),
+      DadosGrafico('Inexigibilidade',
           double.parse('${listaJsonMap[0]['Inexigibilidade']}'), Colors.orange),
-      Task('Convite', double.parse('${listaJsonMap[0]['Convite']}'),
+      DadosGrafico('Convite', double.parse('${listaJsonMap[0]['Convite']}'),
           Colors.green),
-      Task('Pregão eletrônico',
+      DadosGrafico('Pregão eletrônico',
           double.parse('${listaJsonMap[0]['Pregão eletrônico']}'), Colors.pink),
     ];
     listaSeries = [];
     listaSeries.add(
       charts.Series(
         data: pieData,
-        domainFn: (Task task, _) => task.task,
-        measureFn: (Task task, _) => task.taskValue,
-        colorFn: (Task task, _) =>
-            charts.ColorUtil.fromDartColor(task.colorVal),
+        domainFn: (DadosGrafico dadosGrafico, _) => dadosGrafico.legendaGrafico,
+        measureFn: (DadosGrafico dadosGrafico, _) => dadosGrafico.valorGrafico,
+        colorFn: (DadosGrafico dadosGrafico, _) =>
+            charts.ColorUtil.fromDartColor(dadosGrafico.corMostrada),
         id: 'Valores',
-        labelAccessorFn: (Task row, _) => '${row.taskValue}',
+        labelAccessorFn: (DadosGrafico row, _) => '${row.valorGrafico}',
       ),
     );
   }
 
   @action
   void addListaTiposDados(_value) => listaTiposDeDados.add(_value);
-
-  @observable
-  // ignore: prefer_typing_uninitialized_variables
-  var jsonMap;
-
-  @observable
-  dynamic jsonMapAux;
-
-  @observable
-  String jsonFinal = '';
-
-  ObservableList listaJsonMap = ObservableList();
 
   @action
   void setMap() {
@@ -94,9 +90,9 @@ abstract class _GraficosStore with Store {
     }
 
     jsonMapAux = json.encode(map);
-    jsonFinal = '[$jsonMapAux]';
+    jsonMapFinal = '[$jsonMapAux]';
 
-    listaJsonMap.addAll(json.decode(jsonFinal));
+    listaJsonMap.addAll(json.decode(jsonMapFinal));
 
     // ignore: avoid_print
     print("JSONMAP>>> ${listaJsonMap[0]['Sem modalidade definida']}");
