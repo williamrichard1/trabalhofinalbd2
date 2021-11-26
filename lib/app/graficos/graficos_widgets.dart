@@ -148,7 +148,7 @@ class GraficosWidgets {
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
