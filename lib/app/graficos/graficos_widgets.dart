@@ -10,21 +10,44 @@ class GraficosWidgets {
 
   Widget corpoGraficos() {
     final graficosStore = Provider.of<GraficosStore>(context, listen: false);
-    return Container(
-      color: Colors.white,
-      height: MediaQuery.of(context).size.height/4,
+    return SizedBox(
+      height: MediaQuery.of(context).size.height / 2,
       child: Center(
         child: Column(
           children: [
-            Observer(builder: (_){
-              return Expanded(
-              child: charts.PieChart(
-                graficosStore.listaSeries,
-                animate: true,
-                animationDuration: Duration(seconds: 2),
-              ),
-            );
-            },),
+            Observer(
+              builder: (_) {
+                return Expanded(
+                  child: charts.PieChart<String>(
+                    graficosStore.listaSeries,
+                    animate: true,
+                    animationDuration: Duration(seconds: 2),
+                    behaviors: [
+                      charts.DatumLegend(
+                        outsideJustification:
+                            charts.OutsideJustification.endDrawArea,
+                        horizontalFirst: false,
+                        desiredMaxRows: graficosStore.jsonMapFinal.length,
+                        cellPadding: EdgeInsets.only(right: 4, bottom: 4),
+                        entryTextStyle: charts.TextStyleSpec(
+                          color: charts.MaterialPalette.purple.shadeDefault,
+                          fontFamily: 'Georgia',
+                          fontSize: 11,
+                        ),
+                      ),
+                    ],
+                    defaultRenderer: charts.ArcRendererConfig(
+                      arcWidth: 100,
+                      arcRendererDecorators: [
+                        charts.ArcLabelDecorator(
+                          labelPosition: charts.ArcLabelPosition.outside,
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),
@@ -32,10 +55,10 @@ class GraficosWidgets {
   }
 }
 
-class Task {
-  String task = '';
-  double taskValue;
-  Color colorVal = Colors.transparent;
+class DadosGrafico {
+  String legendaGrafico = '';
+  double valorGrafico;
+  Color corMostrada = Colors.transparent;
 
-  Task(this.task, this.taskValue, this.colorVal);
+  DadosGrafico(this.legendaGrafico, this.valorGrafico, this.corMostrada);
 }
