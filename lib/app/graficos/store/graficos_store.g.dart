@@ -39,18 +39,18 @@ mixin _$GraficosStore on _GraficosStore, Store {
     });
   }
 
-  final _$pieDataAtom = Atom(name: '_GraficosStore.pieData');
+  final _$dadosGraficoAtom = Atom(name: '_GraficosStore.dadosGrafico');
 
   @override
-  dynamic get pieData {
-    _$pieDataAtom.reportRead();
-    return super.pieData;
+  dynamic get dadosGrafico {
+    _$dadosGraficoAtom.reportRead();
+    return super.dadosGrafico;
   }
 
   @override
-  set pieData(dynamic value) {
-    _$pieDataAtom.reportWrite(value, super.pieData, () {
-      super.pieData = value;
+  set dadosGrafico(dynamic value) {
+    _$dadosGraficoAtom.reportWrite(value, super.dadosGrafico, () {
+      super.dadosGrafico = value;
     });
   }
 
@@ -96,6 +96,21 @@ mixin _$GraficosStore on _GraficosStore, Store {
   set jsonMapFinal(String value) {
     _$jsonMapFinalAtom.reportWrite(value, super.jsonMapFinal, () {
       super.jsonMapFinal = value;
+    });
+  }
+
+  final _$tipoGraficoAtom = Atom(name: '_GraficosStore.tipoGrafico');
+
+  @override
+  int get tipoGrafico {
+    _$tipoGraficoAtom.reportRead();
+    return super.tipoGrafico;
+  }
+
+  @override
+  set tipoGrafico(int value) {
+    _$tipoGraficoAtom.reportWrite(value, super.tipoGrafico, () {
+      super.tipoGrafico = value;
     });
   }
 
@@ -173,14 +188,26 @@ mixin _$GraficosStore on _GraficosStore, Store {
   }
 
   @override
+  void setTipoGrafico(dynamic _value) {
+    final _$actionInfo = _$_GraficosStoreActionController.startAction(
+        name: '_GraficosStore.setTipoGrafico');
+    try {
+      return super.setTipoGrafico(_value);
+    } finally {
+      _$_GraficosStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 carregandoPagina: ${carregandoPagina},
 jsonGraficos: ${jsonGraficos},
-pieData: ${pieData},
+dadosGrafico: ${dadosGrafico},
 map: ${map},
 jsonMapAux: ${jsonMapAux},
 jsonMapFinal: ${jsonMapFinal},
+tipoGrafico: ${tipoGrafico},
 listaSeries: ${listaSeries}
     ''';
   }

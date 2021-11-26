@@ -16,6 +16,7 @@ class GraficosPage extends StatefulWidget {
 class _GraficosPageState extends State<GraficosPage> {
   Future carregaDados() async {
     final graficosStore = Provider.of<GraficosStore>(context, listen: false);
+    graficosStore.setTipoGrafico(1);
     await GraficosFunctions(context).getDadosGraficos();
 
     graficosStore.setPieData();
@@ -38,20 +39,22 @@ class _GraficosPageState extends State<GraficosPage> {
                 ? Center(
                     child: CircularProgressIndicator(),
                   )
-                : Column(
-                    children: [
-                      SizedBox(
-                        height: 10,
-                      ),
-                      GlobalsWidgets(context).appBar(),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        child: GraficosWidgets(context).corpoGraficos(),
-                      ),
-                    ],
-                  ),
+                : SingleChildScrollView(
+                  child: Column(
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
+                        GlobalsWidgets(context).appBar(),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          child: GraficosWidgets(context).corpoGraficos(),
+                        ),
+                      ],
+                    ),
+                ),
           );
         },
       ),

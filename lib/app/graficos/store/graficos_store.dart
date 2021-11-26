@@ -20,7 +20,7 @@ abstract class _GraficosStore with Store {
   dynamic jsonGraficos;
 
   @observable
-  dynamic pieData; // dados do grafico
+  dynamic dadosGrafico;
 
   @observable
   var map = {};
@@ -30,6 +30,9 @@ abstract class _GraficosStore with Store {
 
   @observable
   String jsonMapFinal = '';
+
+  @observable
+  int tipoGrafico = 1;
 
   @action
   void setCarregandoPagina(_value) => carregandoPagina = _value;
@@ -43,7 +46,7 @@ abstract class _GraficosStore with Store {
 
   @action
   void setPieData() {
-    pieData = [
+    dadosGrafico = [
       DadosGrafico(
           'Sem modalidade definida',
           double.parse('${listaJsonMap[0]['Sem modalidade definida']}'),
@@ -68,7 +71,7 @@ abstract class _GraficosStore with Store {
     listaSeries = [];
     listaSeries.add(
       charts.Series(
-        data: pieData,
+        data: dadosGrafico,
         domainFn: (DadosGrafico dadosGrafico, _) => dadosGrafico.legendaGrafico,
         measureFn: (DadosGrafico dadosGrafico, _) => dadosGrafico.valorGrafico,
         colorFn: (DadosGrafico dadosGrafico, _) =>
@@ -97,4 +100,7 @@ abstract class _GraficosStore with Store {
     // ignore: avoid_print
     print("JSONMAP>>> ${listaJsonMap[0]['Sem modalidade definida']}");
   }
+
+  @action
+  void setTipoGrafico(_value) => tipoGrafico = _value;
 }

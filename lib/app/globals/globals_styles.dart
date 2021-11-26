@@ -10,4 +10,5 @@ class GlobalsStyles {
 
   //CORES APP
   var corPrimariaTexto = Color.fromRGBO(99, 98, 99, 1);
+  var corSecundariaText = Color.fromRGBO(162, 21, 2, 1);
 }
