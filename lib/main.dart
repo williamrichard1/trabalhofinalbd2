@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trabalhofinalbd2/app/cotacao/store/cotacao_moeda_store.dart';
 import 'package:trabalhofinalbd2/app/globals/store/globals_store.dart';
 import 'package:trabalhofinalbd2/app/graficos/store/graficos_store.dart';
 import 'package:trabalhofinalbd2/app/home/home_page.dart';
@@ -29,6 +30,9 @@ class MyApp extends StatelessWidget {
         ),
         Provider<GraficosStore>(
           create: (_) => GraficosStore(),
+        ),
+        Provider<CotacaoMoedaStore>(
+          create: (_) => CotacaoMoedaStore(),
         ),
       ],
       child: MaterialApp(

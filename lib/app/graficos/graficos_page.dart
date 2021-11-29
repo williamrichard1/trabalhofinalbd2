@@ -39,22 +39,9 @@ class _GraficosPageState extends State<GraficosPage> {
                 ? Center(
                     child: CircularProgressIndicator(),
                   )
-                : SingleChildScrollView(
-                  child: Column(
-                      children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        GlobalsWidgets(context).appBar(),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Container(
-                          child: GraficosWidgets(context).corpoGraficos(),
-                        ),
-                      ],
-                    ),
-                ),
+                : GlobalsWidgets(context).estruturaPaginas(
+                    GraficosWidgets(context).corpoGraficos(),
+                  ),
           );
         },
       ),
