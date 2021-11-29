@@ -14,10 +14,14 @@ class RequisicaoInsercaoPage extends StatefulWidget {
 }
 
 class _RequisicaoInsercaoPageState extends State<RequisicaoInsercaoPage> {
+  Future carregaDados() async {
+    await RequisicaoInsercaoFunctions(context).getDadosApi();
+  }
+
   @override
   void initState() {
     super.initState();
-    RequisicaoInsercaoFunctions(context).getDadosApi();
+    carregaDados();
   }
 
   @override
@@ -32,22 +36,9 @@ class _RequisicaoInsercaoPageState extends State<RequisicaoInsercaoPage> {
                 ? Center(
                     child: CircularProgressIndicator(),
                   )
-                : Column(
-                    children: [
-                      SizedBox(
-                        height: 10,
-                      ),
-                      GlobalsWidgets(context).appBar(),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      SingleChildScrollView(
-                        child: Container(
-                          child: RequisicaoInsercaoWidgets(context)
-                              .corpoRequisicaoInsercao(),
-                        ),
-                      ),
-                    ],
+                : GlobalsWidgets(context).estruturaPaginas(
+                    RequisicaoInsercaoWidgets(context)
+                        .corpoRequisicaoInsercao(),
                   ),
           );
         },

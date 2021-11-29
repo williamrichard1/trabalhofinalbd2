@@ -80,4 +80,21 @@ class GlobalsWidgets {
       ),
     );
   }
+
+  Widget estruturaPaginas(Widget corpoPagina) {
+    return Column(
+      children: [
+        SizedBox(
+          height: 10,
+        ),
+        GlobalsWidgets(context).appBar(),
+        SizedBox(
+          height: 20,
+        ),
+        SingleChildScrollView(
+          child: corpoPagina,
+        ),
+      ],
+    );
+  }
 }
