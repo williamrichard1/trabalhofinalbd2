@@ -7,7 +7,7 @@ class CotacaoMoedaStore = _CotacaoMoedaStore with _$CotacaoMoedaStore;
 
 abstract class _CotacaoMoedaStore with Store {
   @observable
-  bool carregandoPagina = true;
+  bool carregandoPagina = false;
 
   @observable
   dynamic jsonCotacao;
@@ -27,6 +27,6 @@ abstract class _CotacaoMoedaStore with Store {
   @action
   void setMoedaSelec(_value) => moedaSelec = _value;
 
-  @action 
-  void setIntervaloData(_value) => intervaloData = _value; 
+  @action
+  void setIntervaloData(_value) => intervaloData = _value;
 }

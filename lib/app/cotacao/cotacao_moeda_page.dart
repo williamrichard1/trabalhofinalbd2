@@ -14,14 +14,14 @@ class CotacaoMoedaPage extends StatefulWidget {
 }
 
 class _CotacaoMoedaPageState extends State<CotacaoMoedaPage> {
-  Future carregaDados() async {
+  /*Future carregaDados() async {
     await CotacaoMoedaFunctions(context).getCotacao();
-  }
+  }*/
 
   @override
   void initState() {
     super.initState();
-    carregaDados();
+    //carregaDados();
   }
 
   @override

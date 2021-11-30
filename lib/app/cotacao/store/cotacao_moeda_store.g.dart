@@ -40,6 +40,36 @@ mixin _$CotacaoMoedaStore on _CotacaoMoedaStore, Store {
     });
   }
 
+  final _$moedaSelecAtom = Atom(name: '_CotacaoMoedaStore.moedaSelec');
+
+  @override
+  String get moedaSelec {
+    _$moedaSelecAtom.reportRead();
+    return super.moedaSelec;
+  }
+
+  @override
+  set moedaSelec(String value) {
+    _$moedaSelecAtom.reportWrite(value, super.moedaSelec, () {
+      super.moedaSelec = value;
+    });
+  }
+
+  final _$intervaloDataAtom = Atom(name: '_CotacaoMoedaStore.intervaloData');
+
+  @override
+  DateTimeRange? get intervaloData {
+    _$intervaloDataAtom.reportRead();
+    return super.intervaloData;
+  }
+
+  @override
+  set intervaloData(DateTimeRange? value) {
+    _$intervaloDataAtom.reportWrite(value, super.intervaloData, () {
+      super.intervaloData = value;
+    });
+  }
+
   final _$_CotacaoMoedaStoreActionController =
       ActionController(name: '_CotacaoMoedaStore');
 
@@ -66,10 +96,34 @@ mixin _$CotacaoMoedaStore on _CotacaoMoedaStore, Store {
   }
 
   @override
+  void setMoedaSelec(dynamic _value) {
+    final _$actionInfo = _$_CotacaoMoedaStoreActionController.startAction(
+        name: '_CotacaoMoedaStore.setMoedaSelec');
+    try {
+      return super.setMoedaSelec(_value);
+    } finally {
+      _$_CotacaoMoedaStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setIntervaloData(dynamic _value) {
+    final _$actionInfo = _$_CotacaoMoedaStoreActionController.startAction(
+        name: '_CotacaoMoedaStore.setIntervaloData');
+    try {
+      return super.setIntervaloData(_value);
+    } finally {
+      _$_CotacaoMoedaStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 carregandoPagina: ${carregandoPagina},
-jsonCotacao: ${jsonCotacao}
+jsonCotacao: ${jsonCotacao},
+moedaSelec: ${moedaSelec},
+intervaloData: ${intervaloData}
     ''';
   }
 }
