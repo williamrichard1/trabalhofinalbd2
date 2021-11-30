@@ -18,7 +18,7 @@ class RequisicaoInsercaoFunctions {
       try {
         var request = await http.get(
           Uri.parse(
-              'https://api.proconvoce.com.br/api/ordem.php?fiscal_id=9&procon_id=1'),
+              /*'https://api.proconvoce.com.br/api/ordem.php?fiscal_id=9&procon_id=1'*/ 'http://10.0.2.2/moeda.php'),
         );
         var jsonRequest = await json.decode(request.body);
         if (jsonRequest != null) {
