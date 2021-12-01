@@ -1,6 +1,6 @@
 # trabalhofinalbd2
 
-Projeto final para matéria de COM 231 - BANCO DE DADOS II.
+Projeto final para matéria de COM231 - BANCO DE DADOS II.
 
 ## Getting Started
 
