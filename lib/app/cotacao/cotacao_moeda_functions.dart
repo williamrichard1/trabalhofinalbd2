@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:trabalhofinalbd2/app/cotacao/store/cotacao_moeda_store.dart';
 import 'package:trabalhofinalbd2/app/globals/globals_functions.dart';
 import 'package:http/http.dart' as http;
+import 'package:trabalhofinalbd2/app/globals/globals_widgets.dart';
 
 class CotacaoMoedaFunctions {
   BuildContext context;
@@ -24,15 +25,17 @@ class CotacaoMoedaFunctions {
         if (jsonRequest != null) {
           cotacaoMoedaStore.setJsonCotacao(jsonRequest);
 
-          // ignore: avoid_print
           print("JSONAPI>>> ${cotacaoMoedaStore.jsonCotacao}");
+          cotacaoMoedaStore.setCarregandoPagina(false);
+        } else {
           cotacaoMoedaStore.setCarregandoPagina(false);
         }
       } catch (e) {
-        // ignore: avoid_print
         print("ERRO GET COTACAO>> $e");
       }
-    } else {}
+    } else {
+      GlobalsWidgets(context).alertSemInternet();
+    }
   }
 
   Future postCotacao() async {
@@ -41,7 +44,7 @@ class CotacaoMoedaFunctions {
     cotacaoMoedaStore.setCarregandoPagina(true);
     if (!(await GlobalsFunctions(context).verificaInternet())) {
       try {
-        var request = await http.post(
+        var response = await http.post(
             Uri.parse(
               'http://10.0.2.2/conversao.php',
             ),
@@ -54,10 +57,39 @@ class CotacaoMoedaFunctions {
                 cotacaoMoedaStore.intervaloData!.end,
               ),
             });
+        if (response.statusCode == 200) {
+          GlobalsWidgets(context).alertSucesso(getCotacao);
+        }
       } catch (e) {
-        // ignore: avoid_print
         print("ERRO GET COTACAO>> $e");
+        GlobalsWidgets(context).alertErroEnvio();
       }
-    } else {}
+    } else {
+      GlobalsWidgets(context).alertSemInternet();
+    }
+  }
+
+  Future pickDateRange() async {
+    final cotacaoMoedaStore =
+        Provider.of<CotacaoMoedaStore>(context, listen: false);
+
+    final initialDateRange = DateTimeRange(
+      start: DateTime.now(),
+      end: DateTime.now(),
+    );
+    final newDateRange = await showDateRangePicker(
+        context: context,
+        firstDate: DateTime(DateTime.now().year - 5),
+        lastDate: DateTime(DateTime.now().year + 5),
+        initialDateRange: cotacaoMoedaStore.intervaloData ?? initialDateRange);
+
+    if (newDateRange == null) {
+      return;
+    } else {
+      // ignore: avoid_print
+      print("DATA NOVA >>> $newDateRange");
+
+      cotacaoMoedaStore.setIntervaloData(newDateRange);
+    }
   }
 }
