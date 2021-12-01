@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:trabalhofinalbd2/app/globals/globals_styles.dart';
 import 'package:trabalhofinalbd2/app/globals/store/globals_store.dart';
 
@@ -90,5 +91,132 @@ class GlobalsWidgets {
         ),
       ),
     );
+  }
+
+  Future alertSucesso(Function funcaoRecebida) async {
+    var alertStyle = AlertStyle(
+      animationType: AnimationType.fromTop,
+      isCloseButton: false,
+      isOverlayTapDismiss: false,
+      descStyle: TextStyle(color: GlobalsStyles(context).corPrimariaTexto),
+      titleTextAlign: TextAlign.center,
+      descTextAlign: TextAlign.center,
+      animationDuration: Duration(milliseconds: 400),
+      alertElevation: 0,
+      alertBorder: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      titleStyle: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+      alertAlignment: Alignment.center,
+    );
+
+    Alert(
+      context: context,
+      style: alertStyle,
+      type: AlertType.success,
+      title: "Dados Enviados ",
+      desc: "Dados enviados com Sucesso, clique em OK para continuar",
+      buttons: [
+        DialogButton(
+          child: Text(
+            "Ok",
+            style: TextStyle(
+              color: GlobalsStyles(context).corTerciaria,
+              fontSize: 20,
+            ),
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+            funcaoRecebida();
+          },
+          color: GlobalsStyles(context).corPrimariaTexto,
+          radius: BorderRadius.circular(10.0),
+        ),
+      ],
+    ).show();
+  }
+
+  Future alertSemInternet() async {
+    var alertStyle = AlertStyle(
+      animationType: AnimationType.fromTop,
+      isCloseButton: false,
+      isOverlayTapDismiss: false,
+      descStyle: TextStyle(color: GlobalsStyles(context).corPrimariaTexto),
+      titleTextAlign: TextAlign.center,
+      descTextAlign: TextAlign.center,
+      animationDuration: Duration(milliseconds: 400),
+      alertElevation: 0,
+      alertBorder: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      titleStyle: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+      alertAlignment: Alignment.center,
+    );
+
+    Alert(
+      context: context,
+      style: alertStyle,
+      type: AlertType.error,
+      title: "Sem Internet",
+      desc: "Você precisa estar conectado à internet",
+      buttons: [
+        DialogButton(
+          child: Text(
+            "Ok",
+            style: TextStyle(
+              color: GlobalsStyles(context).corTerciaria,
+              fontSize: 20,
+            ),
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          color: GlobalsStyles(context).corPrimariaTexto,
+          radius: BorderRadius.circular(10.0),
+        ),
+      ],
+    ).show();
+  }
+
+  Future alertErroEnvio() async {
+    var alertStyle = AlertStyle(
+      animationType: AnimationType.fromTop,
+      isCloseButton: false,
+      isOverlayTapDismiss: false,
+      descStyle: TextStyle(color: GlobalsStyles(context).corPrimariaTexto),
+      titleTextAlign: TextAlign.center,
+      descTextAlign: TextAlign.center,
+      animationDuration: Duration(milliseconds: 400),
+      alertElevation: 0,
+      alertBorder: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      titleStyle: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+      alertAlignment: Alignment.center,
+    );
+
+    Alert(
+      context: context,
+      style: alertStyle,
+      type: AlertType.error,
+      title: "Algo inesperado aconteceu",
+      desc: "Verifique a disponibilidade dos dados na API base",
+      buttons: [
+        DialogButton(
+          child: Text(
+            "Ok",
+            style: TextStyle(
+              color: GlobalsStyles(context).corTerciaria,
+              fontSize: 20,
+            ),
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          color: GlobalsStyles(context).corPrimariaTexto,
+          radius: BorderRadius.circular(10.0),
+        ),
+      ],
+    ).show();
   }
 }

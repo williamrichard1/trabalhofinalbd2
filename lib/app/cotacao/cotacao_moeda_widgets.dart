@@ -67,10 +67,11 @@ class CotacaoMoedaWidgets {
                   ),
                 ),
               ),
-              onTap: () => pickDateRange(),
+              onTap: () => CotacaoMoedaFunctions(context).pickDateRange(),
             ),
             SizedBox(width: 8),
-            Icon(Icons.arrow_forward, color: Colors.blue),
+            Icon(Icons.arrow_forward,
+                color: GlobalsStyles(context).corSecundariaText),
             SizedBox(width: 8),
             GestureDetector(
               child: Container(
@@ -104,7 +105,7 @@ class CotacaoMoedaWidgets {
                   ),
                 ),
               ),
-              onTap: () => pickDateRange(),
+              onTap: () => CotacaoMoedaFunctions(context).pickDateRange(),
             ),
           ],
         ),
@@ -137,7 +138,7 @@ class CotacaoMoedaWidgets {
                     width: 5,
                   ),
                   Icon(
-                    FontAwesomeIcons.search,
+                    FontAwesomeIcons.share,
                     color: GlobalsStyles(context).corQuaternaria,
                     size: GlobalsStyles(context).tamanhoTextoMedio,
                   ),
@@ -146,33 +147,112 @@ class CotacaoMoedaWidgets {
             ),
           ),
         ),
+        Observer(
+          builder: (_) {
+            return cotacaoMoedaStoreT.jsonCotacao != null
+                ? Column(
+                    children: [
+                      SizedBox(
+                        height: 20,
+                      ),
+                      tabelaCotacao(),
+                    ],
+                  )
+                : Container();
+          },
+        ),
       ],
     );
   }
 
-  Future pickDateRange() async {
-    final cotacaoMoedaStore =
-        Provider.of<CotacaoMoedaStore>(context, listen: false);
+  Widget tabelaCotacao() {
+    final cotacaoMoedaStoreT =
+        Provider.of<CotacaoMoedaStore>(context, listen: true);
+    final DadosTabela _dadosTabela =
+        DadosTabela(cotacaoMoedaStoreT.jsonCotacao.length, context);
+    return PaginatedDataTable(
+      header: Text(
+        'Conversão Moeda',
+        style: TextStyle(
+          color: GlobalsStyles(context).corPrimariaTexto,
+          fontSize: GlobalsStyles(context).tamanhoTitulo,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      source: _dadosTabela,
+      columns: [
+        colunas('Data'),
+        colunas('M. Conversão'),
+        colunas('Valor'),
+      ],
+    );
+  }
 
-    final initialDateRange = DateTimeRange(
-      start: DateTime.now(),
-      end: DateTime.now().add(
-        Duration(hours: 24 * 3),
+  DataColumn colunas(String titulo) {
+    return DataColumn(
+      label: Text(
+        titulo,
+        style: TextStyle(
+          color: GlobalsStyles(context).corSecundariaText,
+          fontSize: GlobalsStyles(context).tamanhoTextoMedio,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
-    final newDateRange = await showDateRangePicker(
-        context: context,
-        firstDate: DateTime(DateTime.now().year - 5),
-        lastDate: DateTime(DateTime.now().year + 5),
-        initialDateRange: cotacaoMoedaStore.intervaloData ?? initialDateRange);
+  }
+}
 
-    if (newDateRange == null) {
-      return;
-    } else {
-      // ignore: avoid_print
-      print("DATA NOVA >>> $newDateRange");
+class DadosTabela extends DataTableSource {
+  int tamanhoJson;
+  final int _selectRowCount = 0;
+  BuildContext context;
+  DadosTabela(this.tamanhoJson, this.context);
 
-      cotacaoMoedaStore.setIntervaloData(newDateRange);
-    }
+  @override
+  int get rowCount => tamanhoJson;
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get selectedRowCount => _selectRowCount;
+
+  @override
+  DataRow getRow(int index) {
+    final cotacaoMoedaStore =
+        Provider.of<CotacaoMoedaStore>(context, listen: true);
+    return DataRow.byIndex(
+      index: index,
+      cells: [
+        DataCell(
+          Text(
+            DateFormat('dd/MM/yyyy').format(
+                DateTime.parse(cotacaoMoedaStore.jsonCotacao[index]['data'])),
+            style: TextStyle(
+              color: GlobalsStyles(context).corPrimariaTexto,
+              fontSize: GlobalsStyles(context).tamanhoTextoMedio,
+            ),
+          ),
+        ),
+        DataCell(
+          Text(
+            "${cotacaoMoedaStore.jsonCotacao[index]['moeda_conversao']}",
+            style: TextStyle(
+              color: GlobalsStyles(context).corPrimariaTexto,
+              fontSize: GlobalsStyles(context).tamanhoTextoMedio,
+            ),
+          ),
+        ),
+        DataCell(
+          Text(
+            "${cotacaoMoedaStore.jsonCotacao[index]['valor']}",
+            style: TextStyle(
+              color: GlobalsStyles(context).corPrimariaTexto,
+              fontSize: GlobalsStyles(context).tamanhoTextoMedio,
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }

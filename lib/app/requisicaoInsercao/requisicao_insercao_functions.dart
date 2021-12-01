@@ -4,36 +4,53 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trabalhofinalbd2/app/globals/globals_functions.dart';
 import 'package:http/http.dart' as http;
+import 'package:trabalhofinalbd2/app/globals/globals_widgets.dart';
 import 'package:trabalhofinalbd2/app/requisicaoInsercao/store/requisicao_insercao_store.dart';
 
 class RequisicaoInsercaoFunctions {
   BuildContext context;
   RequisicaoInsercaoFunctions(this.context);
 
-  Future getDadosApi() async {
+  Future<dynamic> getDadosApi() async {
+    dynamic jsonRequest;
     final requisicaoInsercaoStore =
         Provider.of<RequisicaoInsercaoStore>(context, listen: false);
+
     requisicaoInsercaoStore.setCarregandoPagina(true);
     if (!(await GlobalsFunctions(context).verificaInternet())) {
       try {
         var request = await http.get(
-          Uri.parse(
-              /*'https://api.proconvoce.com.br/api/ordem.php?fiscal_id=9&procon_id=1'*/ 'http://10.0.2.2/moeda.php'),
+          Uri.parse('http://10.0.2.2/moeda.php'),
         );
-        var jsonRequest = await json.decode(request.body);
+        jsonRequest = await json.decode(request.body);
         if (jsonRequest != null) {
           requisicaoInsercaoStore.setJsonApi(jsonRequest);
-          // ignore: avoid_print
+
           print("JSONAPI>>> ${requisicaoInsercaoStore.jsonApi}");
           requisicaoInsercaoStore.setCarregandoPagina(false);
+        } else {
+          postMoeda();
         }
       } catch (e) {
-        // ignore: avoid_print
         print("ERRO GET DADOS API >> $e");
       }
     } else {
-      // ignore: avoid_print
-      print("SEM INTERNET");
+      GlobalsWidgets(context).alertSemInternet();
+    }
+    return jsonRequest;
+  }
+
+  Future postMoeda() async {
+    try {
+      var response = await http.post(
+        Uri.parse('http://10.0.2.2/moeda.php'),
+      );
+      if (response.statusCode == 200) {
+        GlobalsWidgets(context).alertSucesso(getDadosApi);
+      }
+    } catch (e) {
+      print("ERRO POST DADOS API >> $e");
+      GlobalsWidgets(context).alertErroEnvio();
     }
   }
 }
