@@ -117,26 +117,22 @@ class RequisicaoInsercaoWidgets {
         ),
         child: SizedBox(
           width: MediaQuery.of(context).size.width / 1.2,
-          child: Padding(
-            padding: EdgeInsets.all(8.0),
-            child: TextField(
-              textAlign: TextAlign.start,
-              controller: _controller,
-              onChanged:
-                  RequisicaoInsercaoFunctions(context).filterSearchResults,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                prefixIcon: Icon(
-                  FontAwesomeIcons.search,
-                  color: GlobalsStyles(context).corSecundariaText,
-                ),
-                hintText: "Filtrar por nome",
-                hintStyle: TextStyle(
-                  color: GlobalsStyles(context).corPrimariaTexto,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: "raleway",
-                  fontSize: 15.0,
-                ),
+          child: TextField(
+            textAlign: TextAlign.start,
+            controller: _controller,
+            onChanged: RequisicaoInsercaoFunctions(context).filterSearchResults,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              prefixIcon: Icon(
+                FontAwesomeIcons.search,
+                color: GlobalsStyles(context).corSecundariaText,
+              ),
+              hintText: "Filtrar por nome",
+              hintStyle: TextStyle(
+                color: GlobalsStyles(context).corPrimariaTexto,
+                fontWeight: FontWeight.bold,
+                fontFamily: "raleway",
+                fontSize: 15.0,
               ),
             ),
           ),

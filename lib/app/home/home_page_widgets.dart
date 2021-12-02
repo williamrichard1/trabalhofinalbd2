@@ -100,12 +100,8 @@ class HomePageWidgets {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  child: Container(
-                    //margin:
+                  child: SizedBox(
                     height: MediaQuery.of(context).size.height / 6,
-                    /*decoration: BoxDecoration(
-                      color: Colors.white,
-                    ),*/
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.max,
