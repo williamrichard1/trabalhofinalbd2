@@ -7,6 +7,7 @@ import 'package:trabalhofinalbd2/app/cotacao/store/cotacao_moeda_store.dart';
 import 'package:trabalhofinalbd2/app/globals/globals_styles.dart';
 import 'package:trabalhofinalbd2/app/requisicaoInsercao/requisicao_insercao_functions.dart';
 import 'package:trabalhofinalbd2/app/requisicaoInsercao/store/requisicao_insercao_store.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class RequisicaoInsercaoWidgets {
   BuildContext context;
@@ -49,7 +50,9 @@ class RequisicaoInsercaoWidgets {
                         );
                       },
                       child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 20),
+                        margin: kIsWeb
+                            ? EdgeInsets.symmetric(horizontal: 150)
+                            : EdgeInsets.symmetric(horizontal: 20),
                         child: Material(
                           elevation: 3,
                           shape: RoundedRectangleBorder(
@@ -103,31 +106,37 @@ class RequisicaoInsercaoWidgets {
   }
 
   Widget barraDePesquisa() {
-    return Material(
-      elevation: 5,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width / 1.2,
-        child: Padding(
-          padding: EdgeInsets.all(8.0),
-          child: TextField(
-            textAlign: TextAlign.start,
-            controller: _controller,
-            onChanged: RequisicaoInsercaoFunctions(context).filterSearchResults,
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              prefixIcon: Icon(
-                FontAwesomeIcons.search,
-                color: GlobalsStyles(context).corSecundariaText,
-              ),
-              hintText: "Filtrar por nome",
-              hintStyle: TextStyle(
-                color: GlobalsStyles(context).corPrimariaTexto,
-                fontWeight: FontWeight.bold,
-                fontFamily: "raleway",
-                fontSize: 15.0,
+    return Container(
+      margin: kIsWeb
+          ? EdgeInsets.symmetric(horizontal: 150)
+          : EdgeInsets.symmetric(horizontal: 20),
+      child: Material(
+        elevation: 5,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width / 1.2,
+          child: Padding(
+            padding: EdgeInsets.all(8.0),
+            child: TextField(
+              textAlign: TextAlign.start,
+              controller: _controller,
+              onChanged:
+                  RequisicaoInsercaoFunctions(context).filterSearchResults,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                prefixIcon: Icon(
+                  FontAwesomeIcons.search,
+                  color: GlobalsStyles(context).corSecundariaText,
+                ),
+                hintText: "Filtrar por nome",
+                hintStyle: TextStyle(
+                  color: GlobalsStyles(context).corPrimariaTexto,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "raleway",
+                  fontSize: 15.0,
+                ),
               ),
             ),
           ),
