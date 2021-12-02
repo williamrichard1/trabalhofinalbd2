@@ -5,15 +5,27 @@ class RequisicaoInsercaoStore = _RequisicaoInsercaoStore
     with _$RequisicaoInsercaoStore;
 
 abstract class _RequisicaoInsercaoStore with Store {
-  @observable
-  dynamic jsonApi;
+  ObservableList<String> listaSearchString = ObservableList<String>();
+
+  ObservableList listaSearchOrigin = ObservableList();
+
+  ObservableList jsonApi = ObservableList();
 
   @observable
   bool carregandoPagina = true;
 
   @action
-  void setJsonApi(_value) => jsonApi = _value;
+  void setCarregandoPagina(_value) => carregandoPagina = _value;
 
   @action
-  void setCarregandoPagina(_value) => carregandoPagina = _value;
+  void addListaSearchOrigin(value) => listaSearchOrigin.addAll(value);
+
+  @action
+  void addListaSearchString(value) => listaSearchString.add(value);
+
+  @action
+  void addJsonApi(value) {
+    jsonApi.clear();
+    jsonApi.addAll(value);
+  }
 }
