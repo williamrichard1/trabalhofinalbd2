@@ -34,7 +34,7 @@ jobs:
       - name: Enable web app
         run: flutter/bin/flutter config --enable-web
       - name: Run tests
-        run: flutter/bin/flutter tests
+        run: flutter/bin/flutter test
       - name: Build app
         run: flutter/bin/flutter build web
       - name: deploy hosting on firebase
