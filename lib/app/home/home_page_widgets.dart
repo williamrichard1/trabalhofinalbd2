@@ -14,8 +14,8 @@ class HomePageWidgets {
 
   List<String> listaOpcoes = <String>[
     "Cotação Moeda",
-    "Gerar Gráficos",
-    "Gerar Relatórios Ad-Hoc"
+    /*"Gerar Gráficos",
+    "Gerar Relatórios Ad-Hoc"*/
   ];
 
   Widget corpoHome() {
