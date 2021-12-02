@@ -6,6 +6,7 @@ import 'package:trabalhofinalbd2/app/globals/globals_widgets.dart';
 import 'package:trabalhofinalbd2/app/globals/store/globals_store.dart';
 import 'package:trabalhofinalbd2/app/graficos/graficos_page.dart';
 import 'package:trabalhofinalbd2/app/requisicaoInsercao/requisicao_insercao_page.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class HomePageWidgets {
   BuildContext context;
@@ -46,7 +47,7 @@ class HomePageWidgets {
             ],
           ),
           SizedBox(
-            height: 10,
+            height: 30,
           ),
           _listViewOpcoes(),
         ],
@@ -90,30 +91,35 @@ class HomePageWidgets {
                 }
                 /*print("OPCAOSELEC>>>> ${listaOpcoes[index]}");*/
               },
-              child: Material(
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 10),
-                  height: MediaQuery.of(context).size.height / 6,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
+              child: Container(
+                margin: kIsWeb
+                    ? EdgeInsets.symmetric(horizontal: 100)
+                    : EdgeInsets.symmetric(horizontal: 10),
+                child: Material(
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Text(
-                        listaOpcoes[index],
-                        style: TextStyle(
-                          fontSize: GlobalsStyles(context).tamanhoTextoMedio,
-                          color: GlobalsStyles(context).corPrimariaTexto,
-                          fontWeight: FontWeight.bold,
+                  child: Container(
+                    //margin:
+                    height: MediaQuery.of(context).size.height / 6,
+                    /*decoration: BoxDecoration(
+                      color: Colors.white,
+                    ),*/
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Text(
+                          listaOpcoes[index],
+                          style: TextStyle(
+                            fontSize: GlobalsStyles(context).tamanhoTextoMedio,
+                            color: GlobalsStyles(context).corPrimariaTexto,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
