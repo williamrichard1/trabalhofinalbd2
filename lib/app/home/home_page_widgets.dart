@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trabalhofinalbd2/app/cotacao/cotacao_moeda_page.dart';
+import 'package:trabalhofinalbd2/app/cotacao/cotacao_moeda_functions.dart';
 import 'package:trabalhofinalbd2/app/globals/globals_styles.dart';
 import 'package:trabalhofinalbd2/app/globals/globals_widgets.dart';
 import 'package:trabalhofinalbd2/app/globals/store/globals_store.dart';
 import 'package:trabalhofinalbd2/app/graficos/graficos_page.dart';
-import 'package:trabalhofinalbd2/app/relatorios/relatorios_page.dart';
 import 'package:trabalhofinalbd2/app/requisicaoInsercao/requisicao_insercao_page.dart';
 
 class HomePageWidgets {
@@ -13,7 +12,6 @@ class HomePageWidgets {
   HomePageWidgets(this.context);
 
   List<String> listaOpcoes = <String>[
-    "Requisição API e Insere no banco",
     "Cotação Moeda",
     "Gerar Gráficos",
     "Gerar Relatórios Ad-Hoc"
@@ -67,18 +65,11 @@ class HomePageWidgets {
           children: [
             GestureDetector(
               onTap: () {
-                if (listaOpcoes[index] == "Requisição API e Insere no banco") {
+                if (listaOpcoes[index] == "Cotação Moeda") {
                   globalsStore.setTituloAppBar(listaOpcoes[index]);
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => RequisicaoInsercaoPage(),
-                    ),
-                  );
-                } else if (listaOpcoes[index] == "Cotação Moeda") {
-                  globalsStore.setTituloAppBar(listaOpcoes[index]);
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => CotacaoMoedaPage(),
                     ),
                   );
                 } else if (listaOpcoes[index] == "Gerar Gráficos") {
@@ -89,12 +80,13 @@ class HomePageWidgets {
                     ),
                   );
                 } else {
-                  globalsStore.setTituloAppBar(listaOpcoes[index]);
+                  CotacaoMoedaFunctions(context).deleteCotacao();
+                  /*globalsStore.setTituloAppBar(listaOpcoes[index]);
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => RelatoriosPage(),
                     ),
-                  );
+                  );*/
                 }
                 /*print("OPCAOSELEC>>>> ${listaOpcoes[index]}");*/
               },

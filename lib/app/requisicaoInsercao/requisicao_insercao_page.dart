@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:trabalhofinalbd2/app/cotacao/store/cotacao_moeda_store.dart';
 import 'package:trabalhofinalbd2/app/globals/globals_widgets.dart';
 import 'package:trabalhofinalbd2/app/requisicaoInsercao/requisicao_insercao_functions.dart';
 import 'package:trabalhofinalbd2/app/requisicaoInsercao/requisicao_insercao_widgets.dart';
@@ -15,6 +16,15 @@ class RequisicaoInsercaoPage extends StatefulWidget {
 
 class _RequisicaoInsercaoPageState extends State<RequisicaoInsercaoPage> {
   Future carregaDados() async {
+    final cotacaoMoedaStore =
+        Provider.of<CotacaoMoedaStore>(context, listen: false);
+    final requisicaoInsercaoStore =
+        Provider.of<RequisicaoInsercaoStore>(context, listen: false);
+    requisicaoInsercaoStore.listaSearchOrigin.clear();
+    requisicaoInsercaoStore.listaSearchOrigin.clear();
+    requisicaoInsercaoStore.jsonApi.clear();
+    cotacaoMoedaStore.moedaSelec = '';
+
     await RequisicaoInsercaoFunctions(context).getDadosApi();
   }
 

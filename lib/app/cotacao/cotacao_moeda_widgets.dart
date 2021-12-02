@@ -170,20 +170,28 @@ class CotacaoMoedaWidgets {
         Provider.of<CotacaoMoedaStore>(context, listen: true);
     final DadosTabela _dadosTabela =
         DadosTabela(cotacaoMoedaStoreT.jsonCotacao.length, context);
-    return PaginatedDataTable(
-      header: Text(
-        'Conversão Moeda',
-        style: TextStyle(
-          color: GlobalsStyles(context).corPrimariaTexto,
-          fontSize: GlobalsStyles(context).tamanhoTitulo,
-          fontWeight: FontWeight.bold,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Expanded(
+          child: PaginatedDataTable(
+            header: Text(
+              'Conversão Moeda',
+              style: TextStyle(
+                color: GlobalsStyles(context).corPrimariaTexto,
+                fontSize: GlobalsStyles(context).tamanhoTitulo,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            source: _dadosTabela,
+            columns: [
+              colunas('Data'),
+              colunas('M. Base'),
+              colunas('M. Conversão'),
+              colunas('Valor'),
+            ],
+          ),
         ),
-      ),
-      source: _dadosTabela,
-      columns: [
-        colunas('Data'),
-        colunas('M. Conversão'),
-        colunas('Valor'),
       ],
     );
   }
@@ -205,6 +213,7 @@ class CotacaoMoedaWidgets {
 class DadosTabela extends DataTableSource {
   int tamanhoJson;
   final int _selectRowCount = 0;
+  var formatCurrency = NumberFormat.decimalPattern();
   BuildContext context;
   DadosTabela(this.tamanhoJson, this.context);
 
@@ -236,6 +245,15 @@ class DadosTabela extends DataTableSource {
         ),
         DataCell(
           Text(
+            "${cotacaoMoedaStore.jsonCotacao[index]['moeda_base']}",
+            style: TextStyle(
+              color: GlobalsStyles(context).corPrimariaTexto,
+              fontSize: GlobalsStyles(context).tamanhoTextoMedio,
+            ),
+          ),
+        ),
+        DataCell(
+          Text(
             "${cotacaoMoedaStore.jsonCotacao[index]['moeda_conversao']}",
             style: TextStyle(
               color: GlobalsStyles(context).corPrimariaTexto,
@@ -245,7 +263,8 @@ class DadosTabela extends DataTableSource {
         ),
         DataCell(
           Text(
-            "${cotacaoMoedaStore.jsonCotacao[index]['valor']}",
+            formatCurrency.format(
+                double.parse(cotacaoMoedaStore.jsonCotacao[index]['valor'])),
             style: TextStyle(
               color: GlobalsStyles(context).corPrimariaTexto,
               fontSize: GlobalsStyles(context).tamanhoTextoMedio,
