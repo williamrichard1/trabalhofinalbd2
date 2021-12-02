@@ -21,7 +21,7 @@ class _RequisicaoInsercaoPageState extends State<RequisicaoInsercaoPage> {
     final requisicaoInsercaoStore =
         Provider.of<RequisicaoInsercaoStore>(context, listen: false);
     requisicaoInsercaoStore.listaSearchOrigin.clear();
-    requisicaoInsercaoStore.listaSearchOrigin.clear();
+    requisicaoInsercaoStore.listaSearchString.clear();
     requisicaoInsercaoStore.jsonApi.clear();
     cotacaoMoedaStore.moedaSelec = '';
 
