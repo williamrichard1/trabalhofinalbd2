@@ -6,7 +6,6 @@ import 'package:trabalhofinalbd2/app/globals/globals_widgets.dart';
 import 'package:trabalhofinalbd2/app/globals/store/globals_store.dart';
 import 'package:trabalhofinalbd2/app/graficos/graficos_page.dart';
 import 'package:trabalhofinalbd2/app/requisicaoInsercao/requisicao_insercao_page.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 
 class HomePageWidgets {
   BuildContext context;
@@ -92,11 +91,9 @@ class HomePageWidgets {
                 /*print("OPCAOSELEC>>>> ${listaOpcoes[index]}");*/
               },
               child: Container(
-                margin: kIsWeb
-                    ? EdgeInsets.symmetric(horizontal: 100)
-                    : EdgeInsets.symmetric(horizontal: 10),
+                margin: GlobalsStyles(context).margemPadrao,
                 child: Material(
-                  elevation: 5,
+                  elevation: GlobalsStyles(context).elevacaoContainers,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),

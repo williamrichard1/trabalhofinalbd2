@@ -40,18 +40,34 @@ mixin _$CotacaoMoedaStore on _CotacaoMoedaStore, Store {
     });
   }
 
-  final _$moedaSelecAtom = Atom(name: '_CotacaoMoedaStore.moedaSelec');
+  final _$siglaMoedaSelecAtom =
+      Atom(name: '_CotacaoMoedaStore.siglaMoedaSelec');
 
   @override
-  String get moedaSelec {
-    _$moedaSelecAtom.reportRead();
-    return super.moedaSelec;
+  String get siglaMoedaSelec {
+    _$siglaMoedaSelecAtom.reportRead();
+    return super.siglaMoedaSelec;
   }
 
   @override
-  set moedaSelec(String value) {
-    _$moedaSelecAtom.reportWrite(value, super.moedaSelec, () {
-      super.moedaSelec = value;
+  set siglaMoedaSelec(String value) {
+    _$siglaMoedaSelecAtom.reportWrite(value, super.siglaMoedaSelec, () {
+      super.siglaMoedaSelec = value;
+    });
+  }
+
+  final _$nomeMoedaSelecAtom = Atom(name: '_CotacaoMoedaStore.nomeMoedaSelec');
+
+  @override
+  String get nomeMoedaSelec {
+    _$nomeMoedaSelecAtom.reportRead();
+    return super.nomeMoedaSelec;
+  }
+
+  @override
+  set nomeMoedaSelec(String value) {
+    _$nomeMoedaSelecAtom.reportWrite(value, super.nomeMoedaSelec, () {
+      super.nomeMoedaSelec = value;
     });
   }
 
@@ -107,6 +123,17 @@ mixin _$CotacaoMoedaStore on _CotacaoMoedaStore, Store {
   }
 
   @override
+  void setNomeMoedaSelec(dynamic _value) {
+    final _$actionInfo = _$_CotacaoMoedaStoreActionController.startAction(
+        name: '_CotacaoMoedaStore.setNomeMoedaSelec');
+    try {
+      return super.setNomeMoedaSelec(_value);
+    } finally {
+      _$_CotacaoMoedaStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setIntervaloData(dynamic _value) {
     final _$actionInfo = _$_CotacaoMoedaStoreActionController.startAction(
         name: '_CotacaoMoedaStore.setIntervaloData');
@@ -122,7 +149,8 @@ mixin _$CotacaoMoedaStore on _CotacaoMoedaStore, Store {
     return '''
 carregandoPagina: ${carregandoPagina},
 jsonCotacao: ${jsonCotacao},
-moedaSelec: ${moedaSelec},
+siglaMoedaSelec: ${siglaMoedaSelec},
+nomeMoedaSelec: ${nomeMoedaSelec},
 intervaloData: ${intervaloData}
     ''';
   }

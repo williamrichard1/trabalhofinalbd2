@@ -7,7 +7,6 @@ import 'package:trabalhofinalbd2/app/cotacao/store/cotacao_moeda_store.dart';
 import 'package:trabalhofinalbd2/app/globals/globals_styles.dart';
 import 'package:trabalhofinalbd2/app/requisicaoInsercao/requisicao_insercao_functions.dart';
 import 'package:trabalhofinalbd2/app/requisicaoInsercao/store/requisicao_insercao_store.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 
 class RequisicaoInsercaoWidgets {
   BuildContext context;
@@ -36,12 +35,14 @@ class RequisicaoInsercaoWidgets {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        // ignore: avoid_print
                         print(
-                            "SIGLA MOEDA SELEC >>> ${requisicaoInsercaoStoreT.jsonApi[index]['sigla']}");
+                            "SIGLA MOEDA SELEC >>> ${requisicaoInsercaoStoreT.jsonApi[index]['nome']}/${requisicaoInsercaoStoreT.jsonApi[index]['sigla']}");
 
                         cotacaoMoedaStore.setMoedaSelec(
                             "${requisicaoInsercaoStoreT.jsonApi[index]['sigla']}");
+
+                        cotacaoMoedaStore.setNomeMoedaSelec(
+                            "${requisicaoInsercaoStoreT.jsonApi[index]['nome']}");
 
                         Navigator.of(context).push(
                           MaterialPageRoute(
@@ -50,11 +51,9 @@ class RequisicaoInsercaoWidgets {
                         );
                       },
                       child: Container(
-                        margin: kIsWeb
-                            ? EdgeInsets.symmetric(horizontal: 150)
-                            : EdgeInsets.symmetric(horizontal: 20),
+                        margin: GlobalsStyles(context).margemPadrao,
                         child: Material(
-                          elevation: 3,
+                          elevation: GlobalsStyles(context).elevacaoContainers,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),
                           ),
@@ -107,16 +106,13 @@ class RequisicaoInsercaoWidgets {
 
   Widget barraDePesquisa() {
     return Container(
-      margin: kIsWeb
-          ? EdgeInsets.symmetric(horizontal: 150)
-          : EdgeInsets.symmetric(horizontal: 20),
+      margin: GlobalsStyles(context).margemPadrao,
       child: Material(
-        elevation: 5,
+        elevation: GlobalsStyles(context).elevacaoContainers,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
         child: SizedBox(
-          width: MediaQuery.of(context).size.width / 1.2,
           child: TextField(
             textAlign: TextAlign.start,
             controller: _controller,

@@ -5,6 +5,7 @@ import 'package:trabalhofinalbd2/app/cotacao/cotacao_moeda_functions.dart';
 //import 'package:trabalhofinalbd2/app/cotacao/cotacao_moeda_functions.dart';
 import 'package:trabalhofinalbd2/app/cotacao/cotacao_moeda_widgets.dart';
 import 'package:trabalhofinalbd2/app/cotacao/store/cotacao_moeda_store.dart';
+import 'package:trabalhofinalbd2/app/globals/globals_styles.dart';
 import 'package:trabalhofinalbd2/app/globals/globals_widgets.dart';
 
 class CotacaoMoedaPage extends StatefulWidget {
@@ -36,6 +37,7 @@ class _CotacaoMoedaPageState extends State<CotacaoMoedaPage> {
       child: Observer(
         builder: (_) {
           return Scaffold(
+            backgroundColor: GlobalsStyles(context).corBackGround,
             body: cotacaoMoedaStoreT.carregandoPagina
                 ? Center(
                     child: CircularProgressIndicator(),
