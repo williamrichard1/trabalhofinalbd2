@@ -25,6 +25,21 @@ mixin _$RequisicaoInsercaoStore on _RequisicaoInsercaoStore, Store {
     });
   }
 
+  final _$jsonRequestAtom = Atom(name: '_RequisicaoInsercaoStore.jsonRequest');
+
+  @override
+  dynamic get jsonRequest {
+    _$jsonRequestAtom.reportRead();
+    return super.jsonRequest;
+  }
+
+  @override
+  set jsonRequest(dynamic value) {
+    _$jsonRequestAtom.reportWrite(value, super.jsonRequest, () {
+      super.jsonRequest = value;
+    });
+  }
+
   final _$_RequisicaoInsercaoStoreActionController =
       ActionController(name: '_RequisicaoInsercaoStore');
 
@@ -73,9 +88,21 @@ mixin _$RequisicaoInsercaoStore on _RequisicaoInsercaoStore, Store {
   }
 
   @override
+  void setJsonRequest(dynamic _value) {
+    final _$actionInfo = _$_RequisicaoInsercaoStoreActionController.startAction(
+        name: '_RequisicaoInsercaoStore.setJsonRequest');
+    try {
+      return super.setJsonRequest(_value);
+    } finally {
+      _$_RequisicaoInsercaoStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
-carregandoPagina: ${carregandoPagina}
+carregandoPagina: ${carregandoPagina},
+jsonRequest: ${jsonRequest}
     ''';
   }
 }

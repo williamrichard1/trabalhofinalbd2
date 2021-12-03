@@ -14,6 +14,9 @@ abstract class _RequisicaoInsercaoStore with Store {
   @observable
   bool carregandoPagina = true;
 
+  @observable
+  dynamic jsonRequest;
+
   @action
   void setCarregandoPagina(_value) => carregandoPagina = _value;
 
@@ -28,4 +31,7 @@ abstract class _RequisicaoInsercaoStore with Store {
     jsonApi.clear();
     jsonApi.addAll(value);
   }
+
+  @action
+  void setJsonRequest(_value) => jsonRequest = _value;
 }
