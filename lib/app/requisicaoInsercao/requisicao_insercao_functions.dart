@@ -37,7 +37,7 @@ class RequisicaoInsercaoFunctions {
           requisicaoInsercaoStore.setCarregandoPagina(false);
         } else {
           var jsonrequest = await jsonDecode(request.body);
-          print('REQUEST QND CAI NO POST >>> ${jsonrequest}');
+          print('REQUEST QND CAI NO POST >>> $jsonrequest');
           postMoeda();
         }
       } catch (e) {

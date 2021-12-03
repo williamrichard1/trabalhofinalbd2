@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trabalhofinalbd2/app/cotacao/cotacao_moeda_functions.dart';
 import 'package:trabalhofinalbd2/app/globals/globals_styles.dart';
 import 'package:trabalhofinalbd2/app/globals/globals_widgets.dart';
 import 'package:trabalhofinalbd2/app/globals/store/globals_store.dart';
