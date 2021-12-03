@@ -21,9 +21,16 @@ class CotacaoMoedaWidgets {
           mainAxisSize: MainAxisSize.max,
           children: [
             Text(
-              "Selecione o intervalo (em dias) para obter os valores",
+              "Selecione o intervalo (em dias) para obter os valores do(a) ",
               style: TextStyle(
                 color: GlobalsStyles(context).corPrimariaTexto,
+                fontSize: GlobalsStyles(context).tamanhoTextoMedio,
+              ),
+            ),
+            Text(
+              cotacaoMoedaStoreT.nomeMoedaSelec,
+              style: TextStyle(
+                color: GlobalsStyles(context).corSecundariaText,
                 fontSize: GlobalsStyles(context).tamanhoTextoMedio,
               ),
             ),
@@ -40,7 +47,7 @@ class CotacaoMoedaWidgets {
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 20),
                 child: Material(
-                  elevation: 5,
+                  elevation: GlobalsStyles(context).elevacaoContainers,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),
@@ -77,7 +84,7 @@ class CotacaoMoedaWidgets {
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 20),
                 child: Material(
-                  elevation: 5,
+                  elevation: GlobalsStyles(context).elevacaoContainers,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),
@@ -113,9 +120,10 @@ class CotacaoMoedaWidgets {
           height: 30,
         ),
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 50),
+          margin: GlobalsStyles(context).margemBotao,
+          height: GlobalsStyles(context).tamanhoBotao(),
           child: Material(
-            elevation: 5,
+            elevation: GlobalsStyles(context).elevacaoContainers,
             color: GlobalsStyles(context).corPrimariaTexto,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
@@ -170,29 +178,24 @@ class CotacaoMoedaWidgets {
         Provider.of<CotacaoMoedaStore>(context, listen: true);
     final DadosTabela _dadosTabela =
         DadosTabela(cotacaoMoedaStoreT.jsonCotacao.length, context);
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Expanded(
-          child: PaginatedDataTable(
-            header: Text(
-              'Conversão Moeda',
-              style: TextStyle(
-                color: GlobalsStyles(context).corPrimariaTexto,
-                fontSize: GlobalsStyles(context).tamanhoTitulo,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            source: _dadosTabela,
-            columns: [
-              colunas('Data'),
-              colunas('M. Base'),
-              colunas('M. Conversão'),
-              colunas('Valor'),
-            ],
+    return Center(
+      child: PaginatedDataTable(
+        header: Text(
+          'Conversão Moeda',
+          style: TextStyle(
+            color: GlobalsStyles(context).corPrimariaTexto,
+            fontSize: GlobalsStyles(context).tamanhoTitulo,
+            fontWeight: FontWeight.bold,
           ),
         ),
-      ],
+        source: _dadosTabela,
+        columns: [
+          colunas('Data'),
+          colunas('M. Base'),
+          colunas('M. Conversão'),
+          colunas('Valor'),
+        ],
+      ),
     );
   }
 
@@ -233,45 +236,29 @@ class DadosTabela extends DataTableSource {
     return DataRow.byIndex(
       index: index,
       cells: [
-        DataCell(
-          Text(
-            DateFormat('dd/MM/yyyy').format(
-                DateTime.parse(cotacaoMoedaStore.jsonCotacao[index]['data'])),
-            style: TextStyle(
-              color: GlobalsStyles(context).corPrimariaTexto,
-              fontSize: GlobalsStyles(context).tamanhoTextoMedio,
-            ),
-          ),
+        celulas(
+          DateFormat('dd/MM/yyyy').format(
+              DateTime.parse(cotacaoMoedaStore.jsonCotacao[index]['data'])),
         ),
-        DataCell(
-          Text(
-            "${cotacaoMoedaStore.jsonCotacao[index]['moeda_base']}",
-            style: TextStyle(
-              color: GlobalsStyles(context).corPrimariaTexto,
-              fontSize: GlobalsStyles(context).tamanhoTextoMedio,
-            ),
-          ),
-        ),
-        DataCell(
-          Text(
-            "${cotacaoMoedaStore.jsonCotacao[index]['moeda_conversao']}",
-            style: TextStyle(
-              color: GlobalsStyles(context).corPrimariaTexto,
-              fontSize: GlobalsStyles(context).tamanhoTextoMedio,
-            ),
-          ),
-        ),
-        DataCell(
-          Text(
-            formatCurrency.format(
-                double.parse(cotacaoMoedaStore.jsonCotacao[index]['valor'])),
-            style: TextStyle(
-              color: GlobalsStyles(context).corPrimariaTexto,
-              fontSize: GlobalsStyles(context).tamanhoTextoMedio,
-            ),
-          ),
+        celulas("${cotacaoMoedaStore.jsonCotacao[index]['moeda_base']}"),
+        celulas("${cotacaoMoedaStore.jsonCotacao[index]['moeda_conversao']}"),
+        celulas(
+          formatCurrency.format(
+              double.parse(cotacaoMoedaStore.jsonCotacao[index]['valor'])),
         ),
       ],
+    );
+  }
+
+  DataCell celulas(String dadoCelula) {
+    return DataCell(
+      Text(
+        dadoCelula,
+        style: TextStyle(
+          color: GlobalsStyles(context).corPrimariaTexto,
+          fontSize: GlobalsStyles(context).tamanhoTextoMedio,
+        ),
+      ),
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:trabalhofinalbd2/app/cotacao/store/cotacao_moeda_store.dart';
+import 'package:trabalhofinalbd2/app/globals/globals_styles.dart';
 import 'package:trabalhofinalbd2/app/globals/globals_widgets.dart';
 import 'package:trabalhofinalbd2/app/requisicaoInsercao/requisicao_insercao_functions.dart';
 import 'package:trabalhofinalbd2/app/requisicaoInsercao/requisicao_insercao_widgets.dart';
@@ -23,7 +24,8 @@ class _RequisicaoInsercaoPageState extends State<RequisicaoInsercaoPage> {
     requisicaoInsercaoStore.listaSearchOrigin.clear();
     requisicaoInsercaoStore.listaSearchString.clear();
     requisicaoInsercaoStore.jsonApi.clear();
-    cotacaoMoedaStore.moedaSelec = '';
+    cotacaoMoedaStore.siglaMoedaSelec = '';
+    cotacaoMoedaStore.nomeMoedaSelec = '';
 
     await RequisicaoInsercaoFunctions(context).getDadosApi();
   }
@@ -42,6 +44,7 @@ class _RequisicaoInsercaoPageState extends State<RequisicaoInsercaoPage> {
       child: Observer(
         builder: (_) {
           return Scaffold(
+            backgroundColor: GlobalsStyles(context).corBackGround,
             body: requisicaoInsercaoStoreT.carregandoPagina
                 ? Center(
                     child: CircularProgressIndicator(),

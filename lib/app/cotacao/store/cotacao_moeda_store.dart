@@ -13,7 +13,10 @@ abstract class _CotacaoMoedaStore with Store {
   dynamic jsonCotacao;
 
   @observable
-  String moedaSelec = '';
+  String siglaMoedaSelec = '';
+
+  @observable 
+  String nomeMoedaSelec = '';
 
   @observable
   DateTimeRange? intervaloData;
@@ -25,7 +28,10 @@ abstract class _CotacaoMoedaStore with Store {
   void setJsonCotacao(_value) => jsonCotacao = _value;
 
   @action
-  void setMoedaSelec(_value) => moedaSelec = _value;
+  void setMoedaSelec(_value) => siglaMoedaSelec = _value;
+
+   @action
+  void setNomeMoedaSelec(_value) => nomeMoedaSelec = _value;
 
   @action
   void setIntervaloData(_value) => intervaloData = _value;

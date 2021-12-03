@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:trabalhofinalbd2/app/globals/globals_styles.dart';
 import 'package:trabalhofinalbd2/app/globals/globals_widgets.dart';
 import 'package:trabalhofinalbd2/app/graficos/graficos_functions.dart';
 import 'package:trabalhofinalbd2/app/graficos/graficos_widgets.dart';
@@ -35,6 +36,7 @@ class _GraficosPageState extends State<GraficosPage> {
       child: Observer(
         builder: (_) {
           return Scaffold(
+            backgroundColor: GlobalsStyles(context).corBackGround,
             body: graficosStoreT.carregandoPagina
                 ? Center(
                     child: CircularProgressIndicator(),
