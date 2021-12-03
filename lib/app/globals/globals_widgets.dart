@@ -125,9 +125,9 @@ class GlobalsWidgets {
               fontSize: 20,
             ),
           ),
-          onPressed: () {
+          onPressed: () async {
             Navigator.of(context).pop();
-            funcaoRecebida();
+            await funcaoRecebida();
           },
           color: GlobalsStyles(context).corPrimariaTexto,
           radius: BorderRadius.circular(10.0),
