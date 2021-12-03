@@ -4,6 +4,7 @@ import 'package:trabalhofinalbd2/app/globals/globals_styles.dart';
 import 'package:trabalhofinalbd2/app/globals/globals_widgets.dart';
 import 'package:trabalhofinalbd2/app/globals/store/globals_store.dart';
 import 'package:trabalhofinalbd2/app/graficos/graficos_page.dart';
+import 'package:trabalhofinalbd2/app/home/home_page_functions.dart';
 import 'package:trabalhofinalbd2/app/requisicaoInsercao/requisicao_insercao_page.dart';
 
 class HomePageWidgets {
@@ -13,7 +14,7 @@ class HomePageWidgets {
   List<String> listaOpcoes = <String>[
     "Cotação Moeda",
     "Gerar Gráficos",
-    /*"Gerar Relatórios Ad-Hoc"*/
+    "Deletar Banco"
   ];
 
   Widget corpoHome() {
@@ -79,6 +80,7 @@ class HomePageWidgets {
                     ),
                   );
                 } else {
+                  HomePageFunctions(context).limpaBancoDeDados();
                   // CotacaoMoedaFunctions(context).limpaBancoDeDados();
                   /*globalsStore.setTituloAppBar(listaOpcoes[index]);
                   Navigator.of(context).push(
