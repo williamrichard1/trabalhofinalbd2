@@ -28,7 +28,7 @@ class HomePageFunctions {
           homePageStore.setCarregandoPagina(false);
           /*GlobalsWidgets(context).alertSucesso(getCotacao);*/
         } else {
-          GlobalsWidgets(context).alertErroEnvio();
+          homePageStore.setCarregandoPagina(false);
         }
       } catch (e) {
         print("ERRO GET COTACAO>> $e");

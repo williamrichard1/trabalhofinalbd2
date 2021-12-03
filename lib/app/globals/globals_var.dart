@@ -4,5 +4,12 @@ class GloblasVars {
   BuildContext context;
   GloblasVars(this.context);
 
-  var urlEp = /*'localhost'*/ /*'10.0.2.2'*/ 'http://itajuba.myscriptcase.com/com231/';
+  //WEB
+  // var urlEp = 'localhost';
+
+  //MOBILE
+  // var urlEp = '10.0.2.2';
+
+  //PROD
+  var urlEp = 'http://itajuba.myscriptcase.com/com231/';
 }
