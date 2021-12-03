@@ -13,31 +13,30 @@ class RequisicaoInsercaoFunctions {
   RequisicaoInsercaoFunctions(this.context);
 
   Future getDadosApi() async {
-    //dynamic jsonRequest;
     final requisicaoInsercaoStore =
         Provider.of<RequisicaoInsercaoStore>(context, listen: false);
-    dynamic request;
 
     requisicaoInsercaoStore.setCarregandoPagina(true);
 
     if (!(await GlobalsFunctions(context).verificaInternet())) {
       try {
-        request = await http
+        var request = await http
             .get(Uri.parse('${GloblasVars(context).urlEp}/moeda.php'));
-        var jsonRequestAux = await json.decode(request.body);
-        requisicaoInsercaoStore.setJsonRequest(jsonRequestAux);
-        if (requisicaoInsercaoStore.jsonRequest != null) {
-          requisicaoInsercaoStore.addListaSearchOrigin(jsonRequestAux);
-          requisicaoInsercaoStore.addJsonApi(jsonRequestAux);
 
-          jsonRequestAux.forEach((element) {
+        requisicaoInsercaoStore.setJsonRequest(await json.decode(request.body));
+        if (requisicaoInsercaoStore.jsonRequest != null) {
+          requisicaoInsercaoStore
+              .addListaSearchOrigin(requisicaoInsercaoStore.jsonRequest);
+          requisicaoInsercaoStore
+              .addJsonApi(requisicaoInsercaoStore.jsonRequest);
+
+          requisicaoInsercaoStore.jsonRequest.forEach((element) {
             requisicaoInsercaoStore.addListaSearchString(element['nome']);
           });
 
           print("JSONAPI>>> ${requisicaoInsercaoStore.jsonApi}");
           requisicaoInsercaoStore.setCarregandoPagina(false);
         } else {
-          //var jsonrequest = await jsonDecode(request.body);
           print(
               'REQUEST QND CAI NO POST >>> ${requisicaoInsercaoStore.jsonRequest}');
           postMoeda();

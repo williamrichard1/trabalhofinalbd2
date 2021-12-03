@@ -18,7 +18,7 @@ class HomePageFunctions {
 
     if (!(await GlobalsFunctions(context).verificaInternet())) {
       try {
-        response = await http.delete(
+        var response = await http.delete(
           Uri.parse(
             '${GloblasVars(context).urlEp}/moeda.php',
           ),
@@ -26,7 +26,6 @@ class HomePageFunctions {
         if (response.body == '1') {
           print('RESPONSEBODYDELETE>>> ${response.body}');
           homePageStore.setCarregandoPagina(false);
-          /*GlobalsWidgets(context).alertSucesso(getCotacao);*/
         } else {
           homePageStore.setCarregandoPagina(false);
         }

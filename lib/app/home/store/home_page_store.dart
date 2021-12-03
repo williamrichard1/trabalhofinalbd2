@@ -5,7 +5,7 @@ class HomePageStore = _HomePageStore with _$HomePageStore;
 
 abstract class _HomePageStore with Store {
   @observable
-  bool carregandoPagina = true;
+  bool carregandoPagina = false;
 
   @action
   void setCarregandoPagina(_value) => carregandoPagina = _value;
