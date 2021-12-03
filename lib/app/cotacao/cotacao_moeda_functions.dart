@@ -17,11 +17,12 @@ class CotacaoMoedaFunctions {
     final cotacaoMoedaStore =
         Provider.of<CotacaoMoedaStore>(context, listen: false);
     cotacaoMoedaStore.setCarregandoPagina(true);
+
     if (!(await GlobalsFunctions(context).verificaInternet())) {
       try {
         var request = await http.get(
           Uri.parse(
-              'http://${GloblasVars(context).urlEp}/conversao.php?moeda_base=${cotacaoMoedaStore.siglaMoedaSelec}'),
+              '${GloblasVars(context).urlEp}/conversao.php?moeda_base=${cotacaoMoedaStore.siglaMoedaSelec}'),
         );
         var jsonRequest = await json.decode(request.body);
         if (jsonRequest != null) {
@@ -48,7 +49,7 @@ class CotacaoMoedaFunctions {
       try {
         var response = await http.post(
             Uri.parse(
-              'http://${GloblasVars(context).urlEp}/conversao.php',
+              '${GloblasVars(context).urlEp}/conversao.php',
             ),
             body: {
               'moeda': cotacaoMoedaStore.siglaMoedaSelec,
@@ -61,32 +62,6 @@ class CotacaoMoedaFunctions {
             });
         if (response.statusCode == 200) {
           GlobalsWidgets(context).alertSucesso(getCotacao);
-        }
-      } catch (e) {
-        print("ERRO GET COTACAO>> $e");
-        GlobalsWidgets(context).alertErroEnvio();
-      }
-    } else {
-      GlobalsWidgets(context).alertSemInternet();
-    }
-  }
-
-  Future deleteCotacao() async {
-    final cotacaoMoedaStore =
-        Provider.of<CotacaoMoedaStore>(context, listen: false);
-    cotacaoMoedaStore.setCarregandoPagina(true);
-    if (!(await GlobalsFunctions(context).verificaInternet())) {
-      try {
-        var response = await http.put(
-          Uri.parse(
-            'http://10.0.2.2/moeda.php',
-          ),
-        );
-        if (response.body == '1') {
-          print('RESPONSEBODYDELETE>>> ${response.body}');
-          /*GlobalsWidgets(context).alertSucesso(getCotacao);*/
-        } else {
-          GlobalsWidgets(context).alertErroEnvio();
         }
       } catch (e) {
         print("ERRO GET COTACAO>> $e");

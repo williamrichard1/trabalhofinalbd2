@@ -80,7 +80,7 @@ class HomePageWidgets {
                     ),
                   );
                 } else {
-                  CotacaoMoedaFunctions(context).deleteCotacao();
+                  // CotacaoMoedaFunctions(context).limpaBancoDeDados();
                   /*globalsStore.setTituloAppBar(listaOpcoes[index]);
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -88,7 +88,6 @@ class HomePageWidgets {
                     ),
                   );*/
                 }
-                /*print("OPCAOSELEC>>>> ${listaOpcoes[index]}");*/
               },
               child: Container(
                 margin: GlobalsStyles(context).margemPadrao,

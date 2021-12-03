@@ -16,12 +16,14 @@ class RequisicaoInsercaoFunctions {
     dynamic jsonRequest;
     final requisicaoInsercaoStore =
         Provider.of<RequisicaoInsercaoStore>(context, listen: false);
+    dynamic request;
 
     requisicaoInsercaoStore.setCarregandoPagina(true);
+
     if (!(await GlobalsFunctions(context).verificaInternet())) {
       try {
-        var request = await http
-            .get(Uri.parse('http://${GloblasVars(context).urlEp}/moeda.php'));
+        request = await http
+            .get(Uri.parse('${GloblasVars(context).urlEp}/moeda.php'));
         jsonRequest = await json.decode(request.body);
         if (jsonRequest != null) {
           requisicaoInsercaoStore.addListaSearchOrigin(jsonRequest);
@@ -34,6 +36,8 @@ class RequisicaoInsercaoFunctions {
           print("JSONAPI>>> ${requisicaoInsercaoStore.jsonApi}");
           requisicaoInsercaoStore.setCarregandoPagina(false);
         } else {
+          var jsonrequest = await jsonDecode(request.body);
+          print('REQUEST QND CAI NO POST >>> ${jsonrequest}');
           postMoeda();
         }
       } catch (e) {
@@ -48,7 +52,7 @@ class RequisicaoInsercaoFunctions {
   Future postMoeda() async {
     try {
       var response = await http.post(
-        Uri.parse('http://${GloblasVars(context).urlEp}/moeda.php'),
+        Uri.parse('${GloblasVars(context).urlEp}/moeda.php'),
       );
       if (response.statusCode == 200) {
         GlobalsWidgets(context).alertSucesso(getDadosApi);
