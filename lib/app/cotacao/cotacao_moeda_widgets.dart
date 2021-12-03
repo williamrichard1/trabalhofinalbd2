@@ -16,25 +16,23 @@ class CotacaoMoedaWidgets {
         Provider.of<CotacaoMoedaStore>(context, listen: true);
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Text(
-              "Selecione o intervalo (em dias) para obter os valores do(a) ",
-              style: TextStyle(
-                color: GlobalsStyles(context).corPrimariaTexto,
-                fontSize: GlobalsStyles(context).tamanhoTextoMedio,
+        Container(
+          margin: GlobalsStyles(context).margemPadrao,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Flexible(
+                child: Text(
+                  "Selecione o intervalo (em dias) para obter os valores do(a) ${cotacaoMoedaStoreT.nomeMoedaSelec}",
+                  style: TextStyle(
+                    color: GlobalsStyles(context).corPrimariaTexto,
+                    fontSize: GlobalsStyles(context).tamanhoTextoMedio,
+                  ),
+                ),
               ),
-            ),
-            Text(
-              cotacaoMoedaStoreT.nomeMoedaSelec,
-              style: TextStyle(
-                color: GlobalsStyles(context).corSecundariaText,
-                fontSize: GlobalsStyles(context).tamanhoTextoMedio,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
         SizedBox(
           height: 20,
@@ -178,24 +176,28 @@ class CotacaoMoedaWidgets {
         Provider.of<CotacaoMoedaStore>(context, listen: true);
     final DadosTabela _dadosTabela =
         DadosTabela(cotacaoMoedaStoreT.jsonCotacao.length, context);
-    return Center(
-      child: PaginatedDataTable(
-        header: Text(
-          'Conversão Moeda',
-          style: TextStyle(
-            color: GlobalsStyles(context).corPrimariaTexto,
-            fontSize: GlobalsStyles(context).tamanhoTitulo,
-            fontWeight: FontWeight.bold,
+    return Row(
+      children: [
+        Expanded(
+          child: PaginatedDataTable(
+            header: Text(
+              'Conversão Moeda',
+              style: TextStyle(
+                color: GlobalsStyles(context).corPrimariaTexto,
+                fontSize: GlobalsStyles(context).tamanhoTitulo,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            source: _dadosTabela,
+            columns: [
+              colunas('Data'),
+              colunas('M. Base'),
+              colunas('M. Conversão'),
+              colunas('Valor'),
+            ],
           ),
         ),
-        source: _dadosTabela,
-        columns: [
-          colunas('Data'),
-          colunas('M. Base'),
-          colunas('M. Conversão'),
-          colunas('Valor'),
-        ],
-      ),
+      ],
     );
   }
 
