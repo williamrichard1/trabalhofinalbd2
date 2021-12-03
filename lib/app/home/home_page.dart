@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-//import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
 import 'package:trabalhofinalbd2/app/globals/globals_styles.dart';
 //import 'package:trabalhofinalbd2/app/home/home_page_functions.dart';
 import 'package:trabalhofinalbd2/app/home/home_page_widgets.dart';
-//import 'package:trabalhofinalbd2/app/home/store/home_page_store.dart';
+import 'package:trabalhofinalbd2/app/home/store/home_page_store.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -26,22 +26,21 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    //final homePageStoreT = Provider.of<HomePageStore>(context, listen: true);
+    final homePageStoreT = Provider.of<HomePageStore>(context, listen: true);
     return SafeArea(
       child: Observer(
         builder: (_) {
           return Scaffold(
             backgroundColor: GlobalsStyles(context).corBackGround,
-            body: /*homePageStoreT.carregandoPagina
+            body: homePageStoreT.carregandoPagina
                 ? Center(
                     child: CircularProgressIndicator(),
                   )
-                :*/
-                SingleChildScrollView(
-              child: Container(
-                child: HomePageWidgets(context).corpoHome(),
-              ),
-            ),
+                : SingleChildScrollView(
+                    child: Container(
+                      child: HomePageWidgets(context).corpoHome(),
+                    ),
+                  ),
           );
         },
       ),
