@@ -15,6 +15,7 @@ class GraficosFunctions {
 
     graficosStore.setCarregandoPagina(true);
     graficosStore.listaTiposDeDados.clear();
+    graficosStore.listaSeries.clear();
     graficosStore.map.clear();
     if (!(await GlobalsFunctions(context).verificaInternet())) {
       try {
@@ -31,7 +32,7 @@ class GraficosFunctions {
           }
 
           graficosStore.setMap();
-          graficosStore.setPieData();
+          graficosStore.setDadosGrafico();
 
           // ignore: avoid_print
           print(" OCRRENCIA DE DADOS >>> ${graficosStore.map}");

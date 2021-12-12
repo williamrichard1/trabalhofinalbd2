@@ -5,11 +5,11 @@ class GloblasVars {
   GloblasVars(this.context);
 
   //WEB
-  // var urlEp = 'localhost';
+  //var urlEp = 'http://localhost';
 
   //MOBILE
-  // var urlEp = '10.0.2.2';
+  var urlEp = '10.0.2.2';
 
   //PROD
-  var urlEp = 'https://itajuba.myscriptcase.com/com231/';
+  //var urlEp = 'https://itajuba.myscriptcase.com/com231/';
 }

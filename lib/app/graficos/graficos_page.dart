@@ -20,7 +20,7 @@ class _GraficosPageState extends State<GraficosPage> {
     graficosStore.setTipoGrafico(1);
     await GraficosFunctions(context).getDadosGraficos();
 
-    graficosStore.setPieData();
+    graficosStore.setDadosGrafico();
   }
 
   @override

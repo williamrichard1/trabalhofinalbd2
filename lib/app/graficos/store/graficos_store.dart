@@ -34,6 +34,23 @@ abstract class _GraficosStore with Store {
   @observable
   int tipoGrafico = 1;
 
+  List listaTeste = [
+    "2021-10-01-105",
+    "2021-10-02-90",
+    "2021-10-03-75",
+    "2021-10-04-110",
+    "2021-10-05-125",
+    "2021-10-06-130",
+    "2021-10-07-65",
+    "2021-10-08-50",
+    "2021-10-10-35",
+    "2021-10-11-150",
+    "2021-10-12-143",
+    "2021-10-13-92",
+  ];
+
+  List<DadosGrafico> listaDadosGrafico = [];
+
   @action
   void setCarregandoPagina(_value) => carregandoPagina = _value;
 
@@ -41,43 +58,34 @@ abstract class _GraficosStore with Store {
   void setJsonGraficos(_value) => jsonGraficos = _value;
 
   @observable
-  List<charts.Series<DadosGrafico, String>> listaSeries =
-      <charts.Series<DadosGrafico, String>>[];
+  List<charts.Series<DadosGrafico, DateTime>> listaSeries = [];
 
   @action
-  void setPieData() {
-    dadosGrafico = [
-      DadosGrafico(
-          'Sem modalidade definida',
-          double.parse('${listaJsonMap[0]['Sem modalidade definida']}'),
-          Colors.red),
-      DadosGrafico(
-          'Pregão presencial',
-          double.parse('${listaJsonMap[0]['Pregão presencial']}'),
-          Colors.yellow),
-      DadosGrafico(
-          'Chamamento público',
-          double.parse('${listaJsonMap[0]['Chamamento público']}'),
-          Colors.blue),
-      DadosGrafico('Concorrência',
-          double.parse('${listaJsonMap[0]['Concorrência']}'), Colors.purple),
-      DadosGrafico('Inexigibilidade',
-          double.parse('${listaJsonMap[0]['Inexigibilidade']}'), Colors.orange),
-      DadosGrafico('Convite', double.parse('${listaJsonMap[0]['Convite']}'),
-          Colors.green),
-      DadosGrafico('Pregão eletrônico',
-          double.parse('${listaJsonMap[0]['Pregão eletrônico']}'), Colors.pink),
-    ];
+  void setDadosGrafico() {
+    listaDadosGrafico.clear();
+    for (int i = 0; i < listaTeste.length; i++) {
+      var splitDados = listaTeste[i].split('-');
+      listaDadosGrafico.add(
+        DadosGrafico(
+          DateTime(
+            int.parse(splitDados[0]),
+            int.parse(splitDados[1]),
+            int.parse(splitDados[2]),
+          ),
+          int.parse(splitDados[3]),
+        ),
+      );
+    }
+
     listaSeries = [];
     listaSeries.add(
-      charts.Series(
-        data: dadosGrafico,
-        domainFn: (DadosGrafico dadosGrafico, _) => dadosGrafico.legendaGrafico,
-        measureFn: (DadosGrafico dadosGrafico, _) => dadosGrafico.valorGrafico,
-        colorFn: (DadosGrafico dadosGrafico, _) =>
-            charts.ColorUtil.fromDartColor(dadosGrafico.corMostrada),
+      charts.Series<DadosGrafico, DateTime>(
         id: 'Valores',
-        labelAccessorFn: (DadosGrafico row, _) => '${row.valorGrafico}',
+        data: listaDadosGrafico,
+        domainFn: (DadosGrafico row, _) => row.timeStamp,
+        measureFn: (DadosGrafico row, _) => row.valor,
+        seriesColor:
+            charts.ColorUtil.fromDartColor(Color.fromRGBO(162, 21, 2, 1)),
       ),
     );
   }
