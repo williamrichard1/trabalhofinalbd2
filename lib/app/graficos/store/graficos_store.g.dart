@@ -117,13 +117,13 @@ mixin _$GraficosStore on _GraficosStore, Store {
   final _$listaSeriesAtom = Atom(name: '_GraficosStore.listaSeries');
 
   @override
-  List<charts.Series<DadosGrafico, String>> get listaSeries {
+  List<charts.Series<DadosGrafico, DateTime>> get listaSeries {
     _$listaSeriesAtom.reportRead();
     return super.listaSeries;
   }
 
   @override
-  set listaSeries(List<charts.Series<DadosGrafico, String>> value) {
+  set listaSeries(List<charts.Series<DadosGrafico, DateTime>> value) {
     _$listaSeriesAtom.reportWrite(value, super.listaSeries, () {
       super.listaSeries = value;
     });
@@ -155,11 +155,11 @@ mixin _$GraficosStore on _GraficosStore, Store {
   }
 
   @override
-  void setPieData() {
+  void setDadosGrafico() {
     final _$actionInfo = _$_GraficosStoreActionController.startAction(
-        name: '_GraficosStore.setPieData');
+        name: '_GraficosStore.setDadosGrafico');
     try {
-      return super.setPieData();
+      return super.setDadosGrafico();
     } finally {
       _$_GraficosStoreActionController.endAction(_$actionInfo);
     }

@@ -25,7 +25,7 @@ class GraficosWidgets {
                     graficosStore.setTipoGrafico(1);
                   },
                   child: Icon(
-                    FontAwesomeIcons.chartPie,
+                    FontAwesomeIcons.chartLine,
                     color: graficosStoreT.tipoGrafico == 1
                         ? GlobalsStyles(context).corSecundariaText
                         : GlobalsStyles(context).corPrimariaTexto,
@@ -39,7 +39,7 @@ class GraficosWidgets {
                     graficosStore.setTipoGrafico(2);
                   },
                   child: Icon(
-                    FontAwesomeIcons.chartBar,
+                    FontAwesomeIcons.table,
                     color: graficosStoreT.tipoGrafico == 2
                         ? GlobalsStyles(context).corSecundariaText
                         : GlobalsStyles(context).corPrimariaTexto,
@@ -50,16 +50,14 @@ class GraficosWidgets {
             SizedBox(
               height: 20,
             ),
-            graficosStoreT.tipoGrafico == 1
-                ? _graficoPizza()
-                : _graficoBarras(),
+            graficosStoreT.tipoGrafico == 1 ? _graficoLinhas() : _tabela(),
           ],
         );
       },
     );
   }
 
-  Widget _graficoPizza() {
+  /*Widget _graficoPizza() {
     final graficosStoreT = Provider.of<GraficosStore>(context, listen: true);
     return SizedBox(
       height: MediaQuery.of(context).size.height / 1.8,
@@ -102,9 +100,9 @@ class GraficosWidgets {
         ),
       ),
     );
-  }
+  }*/
 
-  Widget _graficoBarras() {
+  /*Widget _graficoBarras() {
     final graficosStoreT = Provider.of<GraficosStore>(context, listen: true);
     return SizedBox(
       height: MediaQuery.of(context).size.height / 1.5,
@@ -153,65 +151,39 @@ class GraficosWidgets {
         ),
       ),
     );
-  }
+  }*/
 
-   /*Widget _graficoLinhas() {
+  Widget _graficoLinhas() {
     final graficosStoreT = Provider.of<GraficosStore>(context, listen: true);
-    return SizedBox(
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 10),
       height: MediaQuery.of(context).size.height / 1.5,
       child: Center(
         child: Column(
           children: [
             Expanded(
-              child: charts.LineChart(
+              child: charts.TimeSeriesChart(
                 graficosStoreT.listaSeries,
-                
                 animate: true,
-                /*barGroupingType: charts.BarGroupingType.stacked,
-                barRendererDecorator: charts.BarLabelDecorator(
-                  labelAnchor: charts.BarLabelAnchor.middle,
-                  outsideLabelStyleSpec: charts.TextStyleSpec(
-                    color: charts.MaterialPalette.white,
-                  ),
-                ),*/
-                animationDuration: Duration(seconds: 2),
                 primaryMeasureAxis: charts.NumericAxisSpec(
-                  renderSpec: charts.NoneRenderSpec(),
+                  tickProviderSpec:
+                      charts.BasicNumericTickProviderSpec(desiredTickCount: 10),
                 ),
-                domainAxis: charts.OrdinalAxisSpec(
-                  // Make sure that we draw the domain axis line.
-                  showAxisLine: true,
-                  // But don't draw anything else.
-                  renderSpec: charts.NoneRenderSpec(),
-                ),
-                behaviors: [
-                  charts.DatumLegend(
-                    outsideJustification:
-                        charts.OutsideJustification.endDrawArea,
-                    horizontalFirst: false,
-                    showMeasures: false,
-                    desiredMaxRows: graficosStoreT.jsonMapFinal.length,
-                    cellPadding: EdgeInsets.only(right: 4, bottom: 4),
-                    entryTextStyle: charts.TextStyleSpec(
-                      color: charts.MaterialPalette.gray.shade900,
-                      fontFamily: 'Georgia',
-                      fontSize: 12,
-                    ),
-                  ),
-                ],
               ),
             ),
           ],
         ),
       ),
     );
-  }*/
+  }
+
+  Widget _tabela() {
+    return Container();
+  }
 }
 
 class DadosGrafico {
-  String legendaGrafico = '';
-  double valorGrafico;
-  Color corMostrada = Colors.transparent;
-
-  DadosGrafico(this.legendaGrafico, this.valorGrafico, this.corMostrada);
+  DateTime timeStamp;
+  int valor;
+  DadosGrafico(this.timeStamp, this.valor);
 }
