@@ -243,6 +243,66 @@ mixin _$GraficosStore on _GraficosStore, Store {
     });
   }
 
+  final _$jsonTabelaAtom = Atom(name: '_GraficosStore.jsonTabela');
+
+  @override
+  dynamic get jsonTabela {
+    _$jsonTabelaAtom.reportRead();
+    return super.jsonTabela;
+  }
+
+  @override
+  set jsonTabela(dynamic value) {
+    _$jsonTabelaAtom.reportWrite(value, super.jsonTabela, () {
+      super.jsonTabela = value;
+    });
+  }
+
+  final _$jsonTabelaMediaAtom = Atom(name: '_GraficosStore.jsonTabelaMedia');
+
+  @override
+  dynamic get jsonTabelaMedia {
+    _$jsonTabelaMediaAtom.reportRead();
+    return super.jsonTabelaMedia;
+  }
+
+  @override
+  set jsonTabelaMedia(dynamic value) {
+    _$jsonTabelaMediaAtom.reportWrite(value, super.jsonTabelaMedia, () {
+      super.jsonTabelaMedia = value;
+    });
+  }
+
+  final _$dataInicioTabelaAtom = Atom(name: '_GraficosStore.dataInicioTabela');
+
+  @override
+  String get dataInicioTabela {
+    _$dataInicioTabelaAtom.reportRead();
+    return super.dataInicioTabela;
+  }
+
+  @override
+  set dataInicioTabela(String value) {
+    _$dataInicioTabelaAtom.reportWrite(value, super.dataInicioTabela, () {
+      super.dataInicioTabela = value;
+    });
+  }
+
+  final _$dataFimTabelaAtom = Atom(name: '_GraficosStore.dataFimTabela');
+
+  @override
+  String get dataFimTabela {
+    _$dataFimTabelaAtom.reportRead();
+    return super.dataFimTabela;
+  }
+
+  @override
+  set dataFimTabela(String value) {
+    _$dataFimTabelaAtom.reportWrite(value, super.dataFimTabela, () {
+      super.dataFimTabela = value;
+    });
+  }
+
   final _$listaSeriesAtom = Atom(name: '_GraficosStore.listaSeries');
 
   @override
@@ -333,6 +393,17 @@ mixin _$GraficosStore on _GraficosStore, Store {
 
   final _$_GraficosStoreActionController =
       ActionController(name: '_GraficosStore');
+
+  @override
+  void setDatasTabela(dynamic _value1, dynamic _value2) {
+    final _$actionInfo = _$_GraficosStoreActionController.startAction(
+        name: '_GraficosStore.setDatasTabela');
+    try {
+      return super.setDatasTabela(_value1, _value2);
+    } finally {
+      _$_GraficosStoreActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void setCarregandoPagina(dynamic _value) {
@@ -544,6 +615,28 @@ mixin _$GraficosStore on _GraficosStore, Store {
   }
 
   @override
+  void setJsonTabela(dynamic _value) {
+    final _$actionInfo = _$_GraficosStoreActionController.startAction(
+        name: '_GraficosStore.setJsonTabela');
+    try {
+      return super.setJsonTabela(_value);
+    } finally {
+      _$_GraficosStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setJsonTabelaMedia(dynamic _value) {
+    final _$actionInfo = _$_GraficosStoreActionController.startAction(
+        name: '_GraficosStore.setJsonTabelaMedia');
+    try {
+      return super.setJsonTabelaMedia(_value);
+    } finally {
+      _$_GraficosStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 dataInicioGrafico: ${dataInicioGrafico},
@@ -561,6 +654,10 @@ jsonMapFinal: ${jsonMapFinal},
 tipoGrafico: ${tipoGrafico},
 visibilidadeListaMoedas: ${visibilidadeListaMoedas},
 visibilidadeListaMoedas2: ${visibilidadeListaMoedas2},
+jsonTabela: ${jsonTabela},
+jsonTabelaMedia: ${jsonTabelaMedia},
+dataInicioTabela: ${dataInicioTabela},
+dataFimTabela: ${dataFimTabela},
 listaSeries: ${listaSeries},
 visibilidadeOpcoesGrafico: ${visibilidadeOpcoesGrafico},
 jsonFinalAux: ${jsonFinalAux},
