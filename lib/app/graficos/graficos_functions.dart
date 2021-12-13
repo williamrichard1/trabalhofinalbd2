@@ -64,8 +64,7 @@ class GraficosFunctions {
             )}&moeda_conversao=${graficosStore.moedaConversaoSelec}&moeda_base=${graficosStore.moedaBaseSelec}&tipo_adhoc=${graficosStore.tipoGrafico}'),
           );
         } else if (graficosStore.tipoGrafico == 2) {
-          print(
-              "VARIAVEL QUE VAI PRO ENVIO>> {${graficosStore.jsonFinalAux}}  ");
+          print("VARIAVEL QUE VAI PRO ENVIO>> ${graficosStore.jsonFinalAux} ");
           request = await http.get(
             Uri.parse(
                 '${GlobalsVars(context).urlEp}/adhoc.php?inicio=${DateFormat('yyyy-MM-dd').format(
