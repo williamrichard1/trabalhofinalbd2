@@ -1,55 +1,102 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:trabalhofinalbd2/app/cotacao/store/cotacao_moeda_store.dart';
 import 'package:trabalhofinalbd2/app/globals/globals_functions.dart';
 import 'package:http/http.dart' as http;
+import 'package:trabalhofinalbd2/app/globals/globals_var.dart';
+import 'package:trabalhofinalbd2/app/globals/globals_widgets.dart';
 import 'package:trabalhofinalbd2/app/graficos/store/graficos_store.dart';
 
 class GraficosFunctions {
   BuildContext context;
   GraficosFunctions(this.context);
 
-  Future getDadosGraficos() async {
+  Future getListaMoedas() async {
     final graficosStore = Provider.of<GraficosStore>(context, listen: false);
-
+    graficosStore.listaMoedasGrafico.clear();
+    graficosStore.listaValues.clear();
+    graficosStore.listaValues2.clear();
     graficosStore.setCarregandoPagina(true);
-    graficosStore.listaTiposDeDados.clear();
-    graficosStore.listaSeries.clear();
-    graficosStore.map.clear();
     if (!(await GlobalsFunctions(context).verificaInternet())) {
       try {
-        var request = await http.get(
-          Uri.parse(
-              'https://alertalicitacao.com.br/api/v1/licitacoesAbertas/?uf=MG&token=abcdefabcdefabcdefabcdefabcdef99'),
-        );
+        var request = await http
+            .get(Uri.parse('${GlobalsVars(context).urlEp}/moeda.php'));
         var jsonRequest = await json.decode(request.body);
         if (jsonRequest != null) {
-          graficosStore.setJsonGraficos(jsonRequest['licitacoes']);
-          for (int i = 0; i < graficosStore.jsonGraficos.length; i++) {
-            graficosStore
-                .addListaTiposDados(graficosStore.jsonGraficos[i]['tipo']);
+          graficosStore.setListaMoedaGraficos(jsonRequest);
+          print("LISTA MOEDAS/.>>> ${graficosStore.listaMoedasGrafico}");
+          for (int i = 0; i < graficosStore.listaMoedasGrafico.length; i++) {
+            graficosStore.addListaValue(false);
+            graficosStore.addListaValue2(false);
           }
-
-          graficosStore.setMap();
-          graficosStore.setDadosGrafico();
-
-          // ignore: avoid_print
-          print(" OCRRENCIA DE DADOS >>> ${graficosStore.map}");
-          // ignore: avoid_print
-          print("JSONAPI>>> ${graficosStore.jsonGraficos}");
           graficosStore.setCarregandoPagina(false);
-
-          // ignore: avoid_print
-          print("LISTA DE TIPOS>>> ${graficosStore.listaTiposDeDados}");
+        } else {
+          graficosStore.setCarregandoPagina(false);
         }
       } catch (e) {
-        // ignore: avoid_print
-        print("ERRO GET DADOS API >> $e");
+        print("ERRO GET MOEDAS GRAFICO >>> $e");
+        GlobalsWidgets(context).alertErroEnvio();
       }
     } else {
-      // ignore: avoid_print
-      print("SEM INTERNET");
+      GlobalsWidgets(context).alertSemInternet();
+    }
+  }
+
+  Future getDadosGrafico() async {
+    final graficosStore = Provider.of<GraficosStore>(context, listen: false);
+    final cotacaoMoedaStore =
+        Provider.of<CotacaoMoedaStore>(context, listen: false);
+    graficosStore.setCarregandoPagina(true);
+    graficosStore.listaSeries.clear();
+    dynamic request;
+    if (!(await GlobalsFunctions(context).verificaInternet())) {
+      try {
+        if (graficosStore.tipoGrafico == 1) {
+          request = await http.get(
+            Uri.parse(
+                '${GlobalsVars(context).urlEp}/adhoc.php?inicio=${DateFormat('yyyy-MM-dd').format(
+              cotacaoMoedaStore.intervaloData!.start,
+            )}&fim=${DateFormat('yyyy-MM-dd').format(
+              cotacaoMoedaStore.intervaloData!.end,
+            )}&moeda_conversao=${graficosStore.moedaConversaoSelec}&moeda_base=${graficosStore.moedaBaseSelec}&tipo_adhoc=${graficosStore.tipoGrafico}'),
+          );
+        } else if (graficosStore.tipoGrafico == 2) {
+          print(
+              "VARIAVEL QUE VAI PRO ENVIO>> {${graficosStore.jsonFinalAux}}  ");
+          request = await http.get(
+            Uri.parse(
+                '${GlobalsVars(context).urlEp}/adhoc.php?inicio=${DateFormat('yyyy-MM-dd').format(
+              cotacaoMoedaStore.intervaloData!.start,
+            )}&fim=${DateFormat('yyyy-MM-dd').format(
+              cotacaoMoedaStore.intervaloData!.end,
+            )}&moeda_conversao=${graficosStore.moedaConversaoSelec}&moeda_base=${graficosStore.jsonFinalAux}&tipo_adhoc=${graficosStore.tipoGrafico}'),
+          );
+        } else {
+          request = await http.get(
+            Uri.parse(
+                '${GlobalsVars(context).urlEp}/adhoc.php?inicio=${DateFormat('yyyy-MM-dd').format(
+              cotacaoMoedaStore.intervaloData!.start,
+            )}&fim=${DateFormat('yyyy-MM-dd').format(
+              cotacaoMoedaStore.intervaloData!.end,
+            )}&moeda_conversao=${graficosStore.moedaConversaoSelec}&moeda_base=${graficosStore.moedaBaseSelec}&tipo_adhoc=${graficosStore.tipoGrafico}'),
+          );
+        }
+        var jsonData = await json.decode(request.body);
+        if (jsonData != null) {
+          await graficosStore.setDadosGrafico(jsonData);
+          graficosStore.setCarregandoPagina(false);
+          graficosStore.trocaVisibilidadeOpcoesGrafico(true);
+        } else {
+          GlobalsWidgets(context).alertErroEnvio();
+        }
+      } catch (e) {
+        print("ERRO GET DADOS GRAFICO >>> $e");
+      }
+    } else {
+      GlobalsWidgets(context).alertSemInternet();
     }
   }
 }

@@ -20,7 +20,7 @@ class HomePageFunctions {
       try {
         var response = await http.delete(
           Uri.parse(
-            '${GloblasVars(context).urlEp}/moeda.php',
+            '${GlobalsVars(context).urlEp}/moeda.php',
           ),
         );
         if (response.body == '1') {

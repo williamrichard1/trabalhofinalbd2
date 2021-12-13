@@ -21,9 +21,10 @@ class RequisicaoInsercaoFunctions {
     if (!(await GlobalsFunctions(context).verificaInternet())) {
       try {
         var request = await http
-            .get(Uri.parse('${GloblasVars(context).urlEp}/moeda.php'));
+            .get(Uri.parse('${GlobalsVars(context).urlEp}/moeda.php'));
+        var jsonRequest = await json.decode(request.body);
+        requisicaoInsercaoStore.setJsonRequest(jsonRequest);
 
-        requisicaoInsercaoStore.setJsonRequest(await json.decode(request.body));
         if (requisicaoInsercaoStore.jsonRequest != null) {
           requisicaoInsercaoStore
               .addListaSearchOrigin(requisicaoInsercaoStore.jsonRequest);
@@ -52,9 +53,9 @@ class RequisicaoInsercaoFunctions {
   Future postMoeda() async {
     try {
       var response = await http.post(
-        Uri.parse('${GloblasVars(context).urlEp}/moeda.php'),
+        Uri.parse('${GlobalsVars(context).urlEp}/moeda.php'),
       );
-      if (response.statusCode == 200) {
+      if (response.body == '1') {
         GlobalsWidgets(context).alertSucesso(getDadosApi);
       }
     } catch (e) {

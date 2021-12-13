@@ -22,7 +22,7 @@ class CotacaoMoedaFunctions {
       try {
         var request = await http.get(
           Uri.parse(
-              '${GloblasVars(context).urlEp}/conversao.php?moeda_base=${cotacaoMoedaStore.siglaMoedaSelec}'),
+              '${GlobalsVars(context).urlEp}/conversao.php?moeda_base=${cotacaoMoedaStore.siglaMoedaSelec}'),
         );
         var jsonRequest = await json.decode(request.body);
         if (jsonRequest != null) {
@@ -49,7 +49,7 @@ class CotacaoMoedaFunctions {
       try {
         var response = await http.post(
             Uri.parse(
-              '${GloblasVars(context).urlEp}/conversao.php',
+              '${GlobalsVars(context).urlEp}/conversao.php',
             ),
             body: {
               'moeda': cotacaoMoedaStore.siglaMoedaSelec,
