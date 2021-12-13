@@ -18,9 +18,15 @@ class _GraficosPageState extends State<GraficosPage> {
   Future carregaDados() async {
     final graficosStore = Provider.of<GraficosStore>(context, listen: false);
     graficosStore.setTipoGrafico(1);
-    await GraficosFunctions(context).getDadosGraficos();
+    graficosStore.listaValues.clear();
 
-    graficosStore.setDadosGrafico();
+    graficosStore.jsonEnvioMoedas = '';
+    graficosStore.jsonFinalAux.clear();
+    graficosStore.listaAuxiliarMoedas.clear();
+    await GraficosFunctions(context).getListaMoedas();
+    //await GraficosFunctions(context).getDadosGrafico();
+
+    //graficosStore.setDadosGrafico();
   }
 
   @override

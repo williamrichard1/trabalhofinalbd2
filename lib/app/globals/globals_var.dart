@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class GloblasVars {
+class GlobalsVars {
   BuildContext context;
-  GloblasVars(this.context);
+  GlobalsVars(this.context);
 
   //WEB
   //var urlEp = 'http://localhost';
 
   //MOBILE
-  var urlEp = '10.0.2.2';
+  //var urlEp = '10.0.2.2';
 
   //PROD
-  //var urlEp = 'https://itajuba.myscriptcase.com/com231/';
+  var urlEp = 'https://itajuba.myscriptcase.com/com231/';
 }
