@@ -23,6 +23,8 @@ class _GraficosPageState extends State<GraficosPage> {
     graficosStore.jsonEnvioMoedas = '';
     graficosStore.jsonFinalAux.clear();
     graficosStore.listaAuxiliarMoedas.clear();
+    /*graficosStore.setJsonTabela(null);*/
+    /*graficosStore.setJsonTabelaMedia(null);*/
     await GraficosFunctions(context).getListaMoedas();
     //await GraficosFunctions(context).getDadosGrafico();
 

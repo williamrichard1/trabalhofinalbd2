@@ -13,7 +13,7 @@ class HomePageWidgets {
 
   List<String> listaOpcoes = <String>[
     "Cotação Moeda",
-    "Gerar Gráficos",
+    "Ad Hoc",
     "Deletar Banco"
   ];
 
@@ -72,7 +72,7 @@ class HomePageWidgets {
                       builder: (context) => RequisicaoInsercaoPage(),
                     ),
                   );
-                } else if (listaOpcoes[index] == "Gerar Gráficos") {
+                } else if (listaOpcoes[index] == "Ad Hoc") {
                   globalsStore.setTituloAppBar(listaOpcoes[index]);
                   Navigator.of(context).push(
                     MaterialPageRoute(

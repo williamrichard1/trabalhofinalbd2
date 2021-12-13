@@ -60,6 +60,24 @@ abstract class _GraficosStore with Store {
   @observable
   bool visibilidadeListaMoedas2 = false;
 
+  @observable
+  dynamic jsonTabela;
+
+   @observable
+  dynamic jsonTabelaMedia;
+
+  @observable
+  String dataInicioTabela = '';
+
+  @observable
+  String dataFimTabela = '';
+
+  @action
+  void setDatasTabela(_value1, _value2) {
+    dataInicioTabela = _value1;
+    dataFimTabela = _value2;
+  }
+
   ObservableList<bool> listaValues = ObservableList<bool>();
   ObservableList<bool> listaValues2 = ObservableList<bool>();
 
@@ -99,8 +117,8 @@ abstract class _GraficosStore with Store {
   @action
   Future setDadosGrafico(jsonRecebido) async {
     listaDadosGrafico.clear();
-    for (int i = 0; i < jsonRecebido['valores'].length; i++) {
-      var splitDados = jsonRecebido['valores'][i]['data'].split('-');
+    for (int i = 0; i < jsonRecebido[0]['valores'].length; i++) {
+      var splitDados = jsonRecebido[0]['valores'][i]['data'].split('-');
       listaDadosGrafico.add(
         DadosGrafico(
           DateTime(
@@ -108,7 +126,7 @@ abstract class _GraficosStore with Store {
             int.parse(splitDados[1]),
             int.parse(splitDados[2]),
           ),
-          double.parse(jsonRecebido['valores'][i]['valor']),
+          double.parse(jsonRecebido[0]['valores'][i]['valor']),
         ),
       );
     }
@@ -146,16 +164,16 @@ abstract class _GraficosStore with Store {
   @action
   Future setJsonMoedasBase(/*String _moedaRecebida*/) async {
     for (int i = 0; i < listaAuxiliarMoedas.length; i++) {
-      String jsonAux = "{\"$i\":\"${listaAuxiliarMoedas[i]}\"}";
+      /*String jsonAux = "{\"$i\":\"${listaAuxiliarMoedas[i]}\"}";
 
       addJsonFinal(jsonAux);
-      print("JSON FINAL AUX>>> $jsonFinalAux");
-      /*var jsonMoedasBase = {};
+      print("JSON FINAL AUX>>> $jsonFinalAux");*/
+      var jsonMoedasBase = {};
       // ignore: unnecessary_string_interpolations
-      jsonMoedasBase['"moeda"'] = "${listaAuxiliarMoedas[i]}";
+      jsonMoedasBase['"moeda"'] = "\"${listaAuxiliarMoedas[i]}\"";
       addJsonFinal(jsonMoedasBase);
       print("JSON MOEDAS>> $jsonMoedasBase");
-      print("OUTRO JSON>> $jsonFinalAux");*/
+      print("OUTRO JSON>> $jsonFinalAux");
     }
 
     /*addJsonFinal(jsonMoedasBase);*/
@@ -227,4 +245,10 @@ abstract class _GraficosStore with Store {
   @action
   void trocaVisibilidade2() =>
       visibilidadeListaMoedas2 = !visibilidadeListaMoedas2;
+
+  @action
+  void setJsonTabela(_value) => jsonTabela = _value;
+
+   @action
+  void setJsonTabelaMedia(_value) => jsonTabelaMedia = _value;
 }

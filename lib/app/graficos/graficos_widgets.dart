@@ -45,7 +45,7 @@ class GraficosWidgets {
                     graficosStore.setTipoGrafico(2);
                   },
                   child: Icon(
-                    FontAwesomeIcons.chartBar,
+                    FontAwesomeIcons.table,
                     color: graficosStoreT.tipoGrafico == 2
                         ? GlobalsStyles(context).corSecundariaText
                         : GlobalsStyles(context).corPrimariaTexto,
@@ -59,7 +59,7 @@ class GraficosWidgets {
                     graficosStore.setTipoGrafico(3);
                   },
                   child: Icon(
-                    FontAwesomeIcons.table,
+                    FontAwesomeIcons.ruler,
                     color: graficosStoreT.tipoGrafico == 3
                         ? GlobalsStyles(context).corSecundariaText
                         : GlobalsStyles(context).corPrimariaTexto,
@@ -181,19 +181,20 @@ class GraficosWidgets {
                 ),
                 child: TextButton(
                   onPressed: () async {
-                    if (graficosStoreT.tipoGrafico == 1) {
+                    if (graficosStoreT.tipoGrafico == 1 ||
+                        graficosStoreT.tipoGrafico == 2) {
                       await GraficosFunctions(context).getDadosGrafico();
-                    } else if (graficosStoreT.tipoGrafico == 2) {
+                    } else {
                       await graficosStore.setJsonMoedasBase();
-                      //await graficosStore.montaJsonEnvioPesquisa();
+                      await graficosStore.montaJsonEnvioPesquisa();
                       await GraficosFunctions(context).getDadosGrafico();
-                    } else {}
+                    }
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Criar Gráfico",
+                        "Gerar Adhoc",
                         style: TextStyle(
                           color: GlobalsStyles(context).corQuaternaria,
                           fontSize: GlobalsStyles(context).tamanhoTextoMedio,
@@ -217,9 +218,12 @@ class GraficosWidgets {
             ),
             graficosStoreT.tipoGrafico == 1
                 ? _graficoLinhas()
-                : graficosStoreT.tipoGrafico == 2
-                    ? _tabela()
-                    : Container()
+                : graficosStoreT.tipoGrafico == 2 && graficosStoreT.jsonTabela != null
+                    ? tabelaAdhoc()
+                    : graficosStoreT.tipoGrafico == 3 &&
+                            graficosStoreT.jsonTabelaMedia != null
+                        ? tabelaAdhocMedia()
+                        : Container()
           ],
         );
       },
@@ -369,7 +373,8 @@ class GraficosWidgets {
             physics: NeverScrollableScrollPhysics(),
             itemCount: graficosStoreT.listaMoedasGrafico.length,
             itemBuilder: (_, int index) {
-              return graficosStoreT.tipoGrafico == 1
+              return graficosStoreT.tipoGrafico == 1 ||
+                      graficosStoreT.tipoGrafico == 2
                   ? Container(
                       margin: GlobalsStyles(context).margemPadrao,
                       child: Column(
@@ -410,19 +415,21 @@ class GraficosWidgets {
                       margin: GlobalsStyles(context).margemPadrao,
                       child: Column(
                         children: [
-                          Observer(builder: (_) {
-                            return CheckboxListTile(
-                              title: Text(graficosStoreT
-                                  .listaMoedasGrafico[index]['nome']),
-                              value: graficosStoreT.listaValues[index],
-                              onChanged: (value) {
-                                graficosStore.addListaAuxiliarMoedas(
-                                    graficosStoreT.listaMoedasGrafico[index]
-                                        ['sigla']);
-                                graficosStore.trocaValue(index, value);
-                              },
-                            );
-                          }),
+                          Observer(
+                            builder: (_) {
+                              return CheckboxListTile(
+                                title: Text(graficosStoreT
+                                    .listaMoedasGrafico[index]['nome']),
+                                value: graficosStoreT.listaValues[index],
+                                onChanged: (value) {
+                                  graficosStore.addListaAuxiliarMoedas(
+                                      graficosStoreT.listaMoedasGrafico[index]
+                                          ['sigla']);
+                                  graficosStore.trocaValue(index, value);
+                                },
+                              );
+                            },
+                          ),
                         ],
                       ),
                     );
@@ -485,6 +492,101 @@ class GraficosWidgets {
       },
     );
   }
+
+  Widget tabelaAdhoc() {
+    final graficoStoreT = Provider.of<GraficosStore>(context, listen: true);
+    final DadosTabelaAdhoc _dadosTabela =
+        DadosTabelaAdhoc(graficoStoreT.jsonTabela.length, context);
+    return Observer(builder: (_) {
+      return graficoStoreT.jsonTabela != null
+          ? Row(
+              children: [
+                Expanded(
+                  child: PaginatedDataTable(
+                    header: Text(
+                      'Variação',
+                      style: TextStyle(
+                        color: GlobalsStyles(context).corPrimariaTexto,
+                        fontSize: GlobalsStyles(context).tamanhoTitulo,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    source: _dadosTabela,
+                    columns: [
+                      colunas('Data'),
+                      colunas('M. Base'),
+                      colunas('M. Conversão'),
+                      colunas('Valor'),
+                    ],
+                  ),
+                ),
+              ],
+            )
+          : Container();
+    });
+  }
+
+  Widget tabelaAdhocMedia() {
+    final graficoStoreT = Provider.of<GraficosStore>(context, listen: true);
+    final DadosTabelaMedia _dadosTabela =
+        DadosTabelaMedia(graficoStoreT.jsonTabelaMedia.length, context);
+    return Observer(
+      builder: (_) {
+        return graficoStoreT.jsonTabelaMedia != null
+            ? Row(
+                children: [
+                  Expanded(
+                    child: PaginatedDataTable(
+                      header: Text(
+                        'Média',
+                        style: TextStyle(
+                          color: GlobalsStyles(context).corPrimariaTexto,
+                          fontSize: GlobalsStyles(context).tamanhoTitulo,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      source: _dadosTabela,
+                      columns: [
+                        colunasMedia('Inicio'),
+                        colunasMedia('Fim'),
+                        colunasMedia('M. Base'),
+                        /*colunas('M. Conversão'),*/
+                        colunasMedia('Valor'),
+                      ],
+                    ),
+                  ),
+                ],
+              )
+            : Container();
+      },
+    );
+  }
+
+  DataColumn colunas(String titulo) {
+    return DataColumn(
+      label: Text(
+        titulo,
+        style: TextStyle(
+          color: GlobalsStyles(context).corSecundariaText,
+          fontSize: GlobalsStyles(context).tamanhoTextoMedio,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  DataColumn colunasMedia(String titulo) {
+    return DataColumn(
+      label: Text(
+        titulo,
+        style: TextStyle(
+          color: GlobalsStyles(context).corSecundariaText,
+          fontSize: GlobalsStyles(context).tamanhoTextoMedio,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
 }
 
 class DadosGrafico {
@@ -493,99 +595,103 @@ class DadosGrafico {
   DadosGrafico(this.timeStamp, this.valor);
 }
 
+class DadosTabelaAdhoc extends DataTableSource {
+  int tamanhoJson;
+  final int _selectRowCount = 0;
+  var formatCurrency = NumberFormat.decimalPattern();
+  BuildContext context;
+  DadosTabelaAdhoc(this.tamanhoJson, this.context);
 
-/*Widget _graficoPizza() {
-    final graficosStoreT = Provider.of<GraficosStore>(context, listen: true);
-    return SizedBox(
-      height: MediaQuery.of(context).size.height / 1.8,
-      child: Center(
-        child: Column(
-          children: [
-            Expanded(
-              child: charts.PieChart<String>(
-                graficosStoreT.listaSeries,
-                animate: true,
-                animationDuration: Duration(seconds: 2),
-                behaviors: [
-                  charts.DatumLegend(
-                    outsideJustification:
-                        charts.OutsideJustification.endDrawArea,
-                    horizontalFirst: false,
-                    desiredMaxRows: graficosStoreT.jsonMapFinal.length,
-                    cellPadding: EdgeInsets.only(right: 4, bottom: 4),
-                    entryTextStyle: charts.TextStyleSpec(
-                      color: charts.MaterialPalette.gray.shade900,
-                      fontFamily: 'Georgia',
-                      fontSize: 12,
-                    ),
-                  ),
-                ],
-                defaultRenderer: charts.ArcRendererConfig(
-                  arcWidth: 100,
-                  arcRendererDecorators: [
-                    charts.ArcLabelDecorator(
-                      outsideLabelStyleSpec: charts.TextStyleSpec(
-                        fontSize: 15,
-                      ),
-                      labelPosition: charts.ArcLabelPosition.outside,
-                    ),
-                  ],
-                ),
-              ),
-            )
-          ],
+  @override
+  int get rowCount => tamanhoJson;
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get selectedRowCount => _selectRowCount;
+
+  @override
+  DataRow getRow(int index) {
+    final graficoStoreT = Provider.of<GraficosStore>(context, listen: true);
+    return DataRow.byIndex(
+      index: index,
+      cells: [
+        celulas(
+          DateFormat('dd/MM/yyyy')
+              .format(DateTime.parse(graficoStoreT.jsonTabela[index]['data'])),
+        ),
+        celulas(graficoStoreT.moedaBaseSelec),
+        celulas(graficoStoreT.moedaConversaoSelec),
+        celulas(
+          formatCurrency
+              .format(double.parse(graficoStoreT.jsonTabela[index]['valor'])),
+        ),
+      ],
+    );
+  }
+
+  DataCell celulas(String dadoCelula) {
+    return DataCell(
+      Text(
+        dadoCelula,
+        style: TextStyle(
+          color: GlobalsStyles(context).corPrimariaTexto,
+          fontSize: GlobalsStyles(context).tamanhoTextoMedio,
         ),
       ),
     );
-  }*/
+  }
+}
 
-  /*Widget _graficoBarras() {
-    final graficosStoreT = Provider.of<GraficosStore>(context, listen: true);
-    return SizedBox(
-      height: MediaQuery.of(context).size.height / 1.5,
-      child: Center(
-        child: Column(
-          children: [
-            Expanded(
-              child: charts.BarChart(
-                graficosStoreT.listaSeries,
-                animate: true,
-                barGroupingType: charts.BarGroupingType.stacked,
-                barRendererDecorator: charts.BarLabelDecorator(
-                  labelAnchor: charts.BarLabelAnchor.middle,
-                  outsideLabelStyleSpec: charts.TextStyleSpec(
-                    color: charts.MaterialPalette.white,
-                  ),
-                ),
-                animationDuration: Duration(seconds: 2),
-                primaryMeasureAxis: charts.NumericAxisSpec(
-                  renderSpec: charts.NoneRenderSpec(),
-                ),
-                domainAxis: charts.OrdinalAxisSpec(
-                  // Make sure that we draw the domain axis line.
-                  showAxisLine: true,
-                  // But don't draw anything else.
-                  renderSpec: charts.NoneRenderSpec(),
-                ),
-                behaviors: [
-                  charts.DatumLegend(
-                    outsideJustification:
-                        charts.OutsideJustification.endDrawArea,
-                    horizontalFirst: false,
-                    showMeasures: false,
-                    desiredMaxRows: graficosStoreT.jsonMapFinal.length,
-                    cellPadding: EdgeInsets.only(right: 4, bottom: 4),
-                    entryTextStyle: charts.TextStyleSpec(
-                      color: charts.MaterialPalette.gray.shade900,
-                      fontFamily: 'Georgia',
-                      fontSize: 12,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+class DadosTabelaMedia extends DataTableSource {
+  int tamanhoJson;
+  final int _selectRowCount = 0;
+  var formatCurrency = NumberFormat.decimalPattern();
+  BuildContext context;
+  DadosTabelaMedia(this.tamanhoJson, this.context);
+
+  @override
+  int get rowCount => tamanhoJson;
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get selectedRowCount => _selectRowCount;
+
+  @override
+  DataRow getRow(int index) {
+    final graficoStoreT = Provider.of<GraficosStore>(context, listen: true);
+    return DataRow.byIndex(
+      index: index,
+      cells: [
+        celulas(
+          DateFormat('dd/MM/yyyy').format(
+              DateTime.parse(graficoStoreT.jsonTabelaMedia[index]['inicio'])),
+        ),
+        celulas(
+          DateFormat('dd/MM/yyyy').format(
+              DateTime.parse(graficoStoreT.jsonTabelaMedia[index]['fim'])),
+        ),
+        celulas("${graficoStoreT.jsonTabelaMedia[index]['moeda_base']}"),
+        /*celulas("${graficoStoreT.jsonTabela[index]['moeda_conversao']}"),*/
+        celulas(
+          '${graficoStoreT.jsonTabelaMedia[index]['valores']}',
+        ),
+      ],
+    );
+  }
+
+  DataCell celulas(String dadoCelula) {
+    return DataCell(
+      Text(
+        dadoCelula,
+        style: TextStyle(
+          color: GlobalsStyles(context).corPrimariaTexto,
+          fontSize: GlobalsStyles(context).tamanhoTextoMedio,
         ),
       ),
     );
-  }*/
+  }
+}
