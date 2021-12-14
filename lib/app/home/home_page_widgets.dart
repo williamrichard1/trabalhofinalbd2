@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trabalhofinalbd2/app/adhoc/adhoc_page.dart';
 import 'package:trabalhofinalbd2/app/globals/globals_styles.dart';
 import 'package:trabalhofinalbd2/app/globals/globals_widgets.dart';
 import 'package:trabalhofinalbd2/app/globals/store/globals_store.dart';
-import 'package:trabalhofinalbd2/app/graficos/graficos_page.dart';
 import 'package:trabalhofinalbd2/app/home/home_page_functions.dart';
 import 'package:trabalhofinalbd2/app/requisicaoInsercao/requisicao_insercao_page.dart';
 
@@ -76,7 +76,7 @@ class HomePageWidgets {
                   globalsStore.setTituloAppBar(listaOpcoes[index]);
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => GraficosPage(),
+                      builder: (context) => AdhocPage(),
                     ),
                   );
                 } else {

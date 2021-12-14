@@ -9,6 +9,118 @@ part of 'graficos_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$GraficosStore on _GraficosStore, Store {
+  final _$listaDadosGraficoAtom =
+      Atom(name: '_GraficosStore.listaDadosGrafico');
+
+  @override
+  List<DadosGrafico> get listaDadosGrafico {
+    _$listaDadosGraficoAtom.reportRead();
+    return super.listaDadosGrafico;
+  }
+
+  @override
+  set listaDadosGrafico(List<DadosGrafico> value) {
+    _$listaDadosGraficoAtom.reportWrite(value, super.listaDadosGrafico, () {
+      super.listaDadosGrafico = value;
+    });
+  }
+
+  final _$listaDadosGraficoMediaAtom =
+      Atom(name: '_GraficosStore.listaDadosGraficoMedia');
+
+  @override
+  List<DadosGraficoMedia> get listaDadosGraficoMedia {
+    _$listaDadosGraficoMediaAtom.reportRead();
+    return super.listaDadosGraficoMedia;
+  }
+
+  @override
+  set listaDadosGraficoMedia(List<DadosGraficoMedia> value) {
+    _$listaDadosGraficoMediaAtom
+        .reportWrite(value, super.listaDadosGraficoMedia, () {
+      super.listaDadosGraficoMedia = value;
+    });
+  }
+
+  final _$listaDadosGraficoValorMaxAtom =
+      Atom(name: '_GraficosStore.listaDadosGraficoValorMax');
+
+  @override
+  List<DadosGraficoValorMax> get listaDadosGraficoValorMax {
+    _$listaDadosGraficoValorMaxAtom.reportRead();
+    return super.listaDadosGraficoValorMax;
+  }
+
+  @override
+  set listaDadosGraficoValorMax(List<DadosGraficoValorMax> value) {
+    _$listaDadosGraficoValorMaxAtom
+        .reportWrite(value, super.listaDadosGraficoValorMax, () {
+      super.listaDadosGraficoValorMax = value;
+    });
+  }
+
+  final _$listaSeriesAtom = Atom(name: '_GraficosStore.listaSeries');
+
+  @override
+  List<charts.Series<DadosGrafico, DateTime>> get listaSeries {
+    _$listaSeriesAtom.reportRead();
+    return super.listaSeries;
+  }
+
+  @override
+  set listaSeries(List<charts.Series<DadosGrafico, DateTime>> value) {
+    _$listaSeriesAtom.reportWrite(value, super.listaSeries, () {
+      super.listaSeries = value;
+    });
+  }
+
+  final _$listaSeriesMediaAtom = Atom(name: '_GraficosStore.listaSeriesMedia');
+
+  @override
+  List<charts.Series<DadosGraficoMedia, String>> get listaSeriesMedia {
+    _$listaSeriesMediaAtom.reportRead();
+    return super.listaSeriesMedia;
+  }
+
+  @override
+  set listaSeriesMedia(List<charts.Series<DadosGraficoMedia, String>> value) {
+    _$listaSeriesMediaAtom.reportWrite(value, super.listaSeriesMedia, () {
+      super.listaSeriesMedia = value;
+    });
+  }
+
+  final _$listaSeriesValorMaxAtom =
+      Atom(name: '_GraficosStore.listaSeriesValorMax');
+
+  @override
+  List<charts.Series<DadosGraficoValorMax, String>> get listaSeriesValorMax {
+    _$listaSeriesValorMaxAtom.reportRead();
+    return super.listaSeriesValorMax;
+  }
+
+  @override
+  set listaSeriesValorMax(
+      List<charts.Series<DadosGraficoValorMax, String>> value) {
+    _$listaSeriesValorMaxAtom.reportWrite(value, super.listaSeriesValorMax, () {
+      super.listaSeriesValorMax = value;
+    });
+  }
+
+  final _$carregandoPaginaAtom = Atom(name: '_GraficosStore.carregandoPagina');
+
+  @override
+  bool get carregandoPagina {
+    _$carregandoPaginaAtom.reportRead();
+    return super.carregandoPagina;
+  }
+
+  @override
+  set carregandoPagina(bool value) {
+    _$carregandoPaginaAtom.reportWrite(value, super.carregandoPagina, () {
+      super.carregandoPagina = value;
+    });
+  }
+
   final _$dataInicioGraficoAtom =
       Atom(name: '_GraficosStore.dataInicioGrafico');
 
@@ -104,21 +216,6 @@ mixin _$GraficosStore on _GraficosStore, Store {
     });
   }
 
-  final _$carregandoPaginaAtom = Atom(name: '_GraficosStore.carregandoPagina');
-
-  @override
-  bool get carregandoPagina {
-    _$carregandoPaginaAtom.reportRead();
-    return super.carregandoPagina;
-  }
-
-  @override
-  set carregandoPagina(bool value) {
-    _$carregandoPaginaAtom.reportWrite(value, super.carregandoPagina, () {
-      super.carregandoPagina = value;
-    });
-  }
-
   final _$jsonGraficosAtom = Atom(name: '_GraficosStore.jsonGraficos');
 
   @override
@@ -146,51 +243,6 @@ mixin _$GraficosStore on _GraficosStore, Store {
   set dadosGrafico(dynamic value) {
     _$dadosGraficoAtom.reportWrite(value, super.dadosGrafico, () {
       super.dadosGrafico = value;
-    });
-  }
-
-  final _$mapAtom = Atom(name: '_GraficosStore.map');
-
-  @override
-  Map<dynamic, dynamic> get map {
-    _$mapAtom.reportRead();
-    return super.map;
-  }
-
-  @override
-  set map(Map<dynamic, dynamic> value) {
-    _$mapAtom.reportWrite(value, super.map, () {
-      super.map = value;
-    });
-  }
-
-  final _$jsonMapAuxAtom = Atom(name: '_GraficosStore.jsonMapAux');
-
-  @override
-  dynamic get jsonMapAux {
-    _$jsonMapAuxAtom.reportRead();
-    return super.jsonMapAux;
-  }
-
-  @override
-  set jsonMapAux(dynamic value) {
-    _$jsonMapAuxAtom.reportWrite(value, super.jsonMapAux, () {
-      super.jsonMapAux = value;
-    });
-  }
-
-  final _$jsonMapFinalAtom = Atom(name: '_GraficosStore.jsonMapFinal');
-
-  @override
-  String get jsonMapFinal {
-    _$jsonMapFinalAtom.reportRead();
-    return super.jsonMapFinal;
-  }
-
-  @override
-  set jsonMapFinal(String value) {
-    _$jsonMapFinalAtom.reportWrite(value, super.jsonMapFinal, () {
-      super.jsonMapFinal = value;
     });
   }
 
@@ -273,6 +325,21 @@ mixin _$GraficosStore on _GraficosStore, Store {
     });
   }
 
+  final _$jsonValorMaxAtom = Atom(name: '_GraficosStore.jsonValorMax');
+
+  @override
+  dynamic get jsonValorMax {
+    _$jsonValorMaxAtom.reportRead();
+    return super.jsonValorMax;
+  }
+
+  @override
+  set jsonValorMax(dynamic value) {
+    _$jsonValorMaxAtom.reportWrite(value, super.jsonValorMax, () {
+      super.jsonValorMax = value;
+    });
+  }
+
   final _$dataInicioTabelaAtom = Atom(name: '_GraficosStore.dataInicioTabela');
 
   @override
@@ -303,53 +370,6 @@ mixin _$GraficosStore on _GraficosStore, Store {
     });
   }
 
-  final _$listaSeriesAtom = Atom(name: '_GraficosStore.listaSeries');
-
-  @override
-  List<charts.Series<DadosGrafico, DateTime>> get listaSeries {
-    _$listaSeriesAtom.reportRead();
-    return super.listaSeries;
-  }
-
-  @override
-  set listaSeries(List<charts.Series<DadosGrafico, DateTime>> value) {
-    _$listaSeriesAtom.reportWrite(value, super.listaSeries, () {
-      super.listaSeries = value;
-    });
-  }
-
-  final _$visibilidadeOpcoesGraficoAtom =
-      Atom(name: '_GraficosStore.visibilidadeOpcoesGrafico');
-
-  @override
-  bool get visibilidadeOpcoesGrafico {
-    _$visibilidadeOpcoesGraficoAtom.reportRead();
-    return super.visibilidadeOpcoesGrafico;
-  }
-
-  @override
-  set visibilidadeOpcoesGrafico(bool value) {
-    _$visibilidadeOpcoesGraficoAtom
-        .reportWrite(value, super.visibilidadeOpcoesGrafico, () {
-      super.visibilidadeOpcoesGrafico = value;
-    });
-  }
-
-  final _$jsonFinalAuxAtom = Atom(name: '_GraficosStore.jsonFinalAux');
-
-  @override
-  ObservableList<dynamic> get jsonFinalAux {
-    _$jsonFinalAuxAtom.reportRead();
-    return super.jsonFinalAux;
-  }
-
-  @override
-  set jsonFinalAux(ObservableList<dynamic> value) {
-    _$jsonFinalAuxAtom.reportWrite(value, super.jsonFinalAux, () {
-      super.jsonFinalAux = value;
-    });
-  }
-
   final _$jsonEnvioMoedasAtom = Atom(name: '_GraficosStore.jsonEnvioMoedas');
 
   @override
@@ -372,6 +392,24 @@ mixin _$GraficosStore on _GraficosStore, Store {
   Future<dynamic> setDadosGrafico(dynamic jsonRecebido) {
     return _$setDadosGraficoAsyncAction
         .run(() => super.setDadosGrafico(jsonRecebido));
+  }
+
+  final _$setDadosGraficoMediaAsyncAction =
+      AsyncAction('_GraficosStore.setDadosGraficoMedia');
+
+  @override
+  Future<dynamic> setDadosGraficoMedia(dynamic jsonRecebido) {
+    return _$setDadosGraficoMediaAsyncAction
+        .run(() => super.setDadosGraficoMedia(jsonRecebido));
+  }
+
+  final _$setDadosGraficoValorMaxAsyncAction =
+      AsyncAction('_GraficosStore.setDadosGraficoValorMax');
+
+  @override
+  Future<dynamic> setDadosGraficoValorMax(dynamic jsonRecebido) {
+    return _$setDadosGraficoValorMaxAsyncAction
+        .run(() => super.setDadosGraficoValorMax(jsonRecebido));
   }
 
   final _$setJsonMoedasBaseAsyncAction =
@@ -444,17 +482,6 @@ mixin _$GraficosStore on _GraficosStore, Store {
         name: '_GraficosStore.addJsonFinal');
     try {
       return super.addJsonFinal(_value);
-    } finally {
-      _$_GraficosStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void trocaVisibilidadeOpcoesGrafico(dynamic _value) {
-    final _$actionInfo = _$_GraficosStoreActionController.startAction(
-        name: '_GraficosStore.trocaVisibilidadeOpcoesGrafico');
-    try {
-      return super.trocaVisibilidadeOpcoesGrafico(_value);
     } finally {
       _$_GraficosStoreActionController.endAction(_$actionInfo);
     }
@@ -639,28 +666,29 @@ mixin _$GraficosStore on _GraficosStore, Store {
   @override
   String toString() {
     return '''
+listaDadosGrafico: ${listaDadosGrafico},
+listaDadosGraficoMedia: ${listaDadosGraficoMedia},
+listaDadosGraficoValorMax: ${listaDadosGraficoValorMax},
+listaSeries: ${listaSeries},
+listaSeriesMedia: ${listaSeriesMedia},
+listaSeriesValorMax: ${listaSeriesValorMax},
+carregandoPagina: ${carregandoPagina},
 dataInicioGrafico: ${dataInicioGrafico},
 dataFimGrafico: ${dataFimGrafico},
 nomeMoedaBaseSelec: ${nomeMoedaBaseSelec},
 moedaBaseSelec: ${moedaBaseSelec},
 moedaConversaoSelec: ${moedaConversaoSelec},
 nomeMoedaConversaoSelec: ${nomeMoedaConversaoSelec},
-carregandoPagina: ${carregandoPagina},
 jsonGraficos: ${jsonGraficos},
 dadosGrafico: ${dadosGrafico},
-map: ${map},
-jsonMapAux: ${jsonMapAux},
-jsonMapFinal: ${jsonMapFinal},
 tipoGrafico: ${tipoGrafico},
 visibilidadeListaMoedas: ${visibilidadeListaMoedas},
 visibilidadeListaMoedas2: ${visibilidadeListaMoedas2},
 jsonTabela: ${jsonTabela},
 jsonTabelaMedia: ${jsonTabelaMedia},
+jsonValorMax: ${jsonValorMax},
 dataInicioTabela: ${dataInicioTabela},
 dataFimTabela: ${dataFimTabela},
-listaSeries: ${listaSeries},
-visibilidadeOpcoesGrafico: ${visibilidadeOpcoesGrafico},
-jsonFinalAux: ${jsonFinalAux},
 jsonEnvioMoedas: ${jsonEnvioMoedas}
     ''';
   }
