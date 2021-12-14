@@ -2,18 +2,43 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
-import 'package:trabalhofinalbd2/app/graficos/graficos_widgets.dart';
+import 'package:trabalhofinalbd2/app/adhoc/graficos/tiposgraficos.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 part 'graficos_store.g.dart';
 
 class GraficosStore = _GraficosStore with _$GraficosStore;
 
 abstract class _GraficosStore with Store {
-  /*ObservableList listaTiposDeDados = ObservableList();
-
-  ObservableList listaJsonMap = ObservableList();*/
-
   ObservableList listaMoedasGrafico = ObservableList();
+
+  ObservableList jsonFinalAux = ObservableList();
+
+  ObservableList<String> listaAuxiliarMoedas = ObservableList<String>();
+
+  ObservableList<bool> listaValues = ObservableList<bool>();
+
+  ObservableList<bool> listaValues2 = ObservableList<bool>();
+
+  @observable
+  List<DadosGrafico> listaDadosGrafico = [];
+
+  @observable
+  List<DadosGraficoMedia> listaDadosGraficoMedia = [];
+
+  @observable
+  List<DadosGraficoValorMax> listaDadosGraficoValorMax = [];
+
+  @observable
+  List<charts.Series<DadosGrafico, DateTime>> listaSeries = [];
+
+  @observable
+  List<charts.Series<DadosGraficoMedia, String>> listaSeriesMedia = [];
+
+  @observable
+  List<charts.Series<DadosGraficoValorMax, String>> listaSeriesValorMax = [];
+
+  @observable
+  bool carregandoPagina = true;
 
   @observable
   String dataInicioGrafico = '';
@@ -34,22 +59,10 @@ abstract class _GraficosStore with Store {
   String nomeMoedaConversaoSelec = '';
 
   @observable
-  bool carregandoPagina = true;
-
-  @observable
   dynamic jsonGraficos;
 
   @observable
   dynamic dadosGrafico;
-
-  @observable
-  var map = {};
-
-  @observable
-  dynamic jsonMapAux;
-
-  @observable
-  String jsonMapFinal = '';
 
   @observable
   int tipoGrafico = 1;
@@ -63,8 +76,11 @@ abstract class _GraficosStore with Store {
   @observable
   dynamic jsonTabela;
 
-   @observable
+  @observable
   dynamic jsonTabelaMedia;
+
+  @observable
+  dynamic jsonValorMax;
 
   @observable
   String dataInicioTabela = '';
@@ -72,47 +88,20 @@ abstract class _GraficosStore with Store {
   @observable
   String dataFimTabela = '';
 
+  @observable
+  String jsonEnvioMoedas = '';
+
   @action
   void setDatasTabela(_value1, _value2) {
     dataInicioTabela = _value1;
     dataFimTabela = _value2;
   }
 
-  ObservableList<bool> listaValues = ObservableList<bool>();
-  ObservableList<bool> listaValues2 = ObservableList<bool>();
-
-  List listaTeste = [
-    "2021-10-01-105",
-    "2021-10-02-90",
-    "2021-10-03-75",
-    "2021-10-04-110",
-    "2021-10-05-125",
-    "2021-10-06-130",
-    "2021-10-07-65",
-    "2021-10-08-50",
-    "2021-10-10-35",
-    "2021-10-11-150",
-    "2021-10-12-143",
-    "2021-10-13-92",
-    "2021-10-14-145",
-    "2021-10-15-55",
-    "2021-10-16-230",
-    "2021-10-17-71",
-    "2021-10-18-39",
-    "2021-10-19-40",
-    "2021-10-20-45",
-  ];
-
-  List<DadosGrafico> listaDadosGrafico = [];
-
   @action
   void setCarregandoPagina(_value) => carregandoPagina = _value;
 
   @action
   void setJsonGraficos(_value) => jsonGraficos = _value;
-
-  @observable
-  List<charts.Series<DadosGrafico, DateTime>> listaSeries = [];
 
   @action
   Future setDadosGrafico(jsonRecebido) async {
@@ -136,7 +125,7 @@ abstract class _GraficosStore with Store {
       charts.Series<DadosGrafico, DateTime>(
         id: 'Valores',
         data: listaDadosGrafico,
-        domainFn: (DadosGrafico row, _) => row.timeStamp,
+        domainFn: (DadosGrafico row, _) => row.periodo,
         measureFn: (DadosGrafico row, _) => row.valor,
         seriesColor:
             charts.ColorUtil.fromDartColor(Color.fromRGBO(162, 21, 2, 1)),
@@ -144,13 +133,53 @@ abstract class _GraficosStore with Store {
     );
   }
 
-  @observable
-  bool visibilidadeOpcoesGrafico = false;
+  @action
+  Future setDadosGraficoMedia(jsonRecebido) async {
+    listaDadosGraficoMedia.clear();
+    for (int i = 0; i < jsonRecebido.length; i++) {
+      listaDadosGraficoMedia.add(
+        DadosGraficoMedia(
+          '${jsonRecebido[i]['moeda_base']}',
+          double.parse('${jsonRecebido[i]['valores']}'),
+        ),
+      );
+    }
+    listaSeriesMedia = [];
+    listaSeriesMedia.add(
+      charts.Series<DadosGraficoMedia, String>(
+        id: 'Valores',
+        data: listaDadosGraficoMedia,
+        domainFn: (DadosGraficoMedia row, _) => row.moeda,
+        measureFn: (DadosGraficoMedia row, _) => row.valor,
+        seriesColor:
+            charts.ColorUtil.fromDartColor(Color.fromRGBO(162, 21, 2, 1)),
+      ),
+    );
+  }
 
-  @observable
-  ObservableList jsonFinalAux = ObservableList();
-
-  ObservableList<String> listaAuxiliarMoedas = ObservableList<String>();
+  @action
+  Future setDadosGraficoValorMax(jsonRecebido) async {
+    listaDadosGraficoValorMax.clear();
+    for (int i = 0; i < jsonRecebido.length; i++) {
+      listaDadosGraficoMedia.add(
+        DadosGraficoMedia(
+          '${jsonRecebido[i]['moeda_base']}',
+          double.parse('${jsonRecebido[i]['valores']}'),
+        ),
+      );
+    }
+    listaSeriesValorMax = [];
+    listaSeriesValorMax.add(
+      charts.Series<DadosGraficoValorMax, String>(
+        id: 'Valores',
+        data: listaDadosGraficoValorMax,
+        domainFn: (DadosGraficoValorMax row, _) => row.moeda,
+        measureFn: (DadosGraficoValorMax row, _) => row.valor,
+        seriesColor:
+            charts.ColorUtil.fromDartColor(Color.fromRGBO(162, 21, 2, 1)),
+      ),
+    );
+  }
 
   @action
   void addListaAuxiliarMoedas(_value) {
@@ -158,16 +187,9 @@ abstract class _GraficosStore with Store {
     print("LISTA AUXILIAR >> $listaAuxiliarMoedas");
   }
 
-  @observable
-  String jsonEnvioMoedas = '';
-
   @action
-  Future setJsonMoedasBase(/*String _moedaRecebida*/) async {
+  Future setJsonMoedasBase() async {
     for (int i = 0; i < listaAuxiliarMoedas.length; i++) {
-      /*String jsonAux = "{\"$i\":\"${listaAuxiliarMoedas[i]}\"}";
-
-      addJsonFinal(jsonAux);
-      print("JSON FINAL AUX>>> $jsonFinalAux");*/
       var jsonMoedasBase = {};
       // ignore: unnecessary_string_interpolations
       jsonMoedasBase['"moeda"'] = "\"${listaAuxiliarMoedas[i]}\"";
@@ -175,8 +197,6 @@ abstract class _GraficosStore with Store {
       print("JSON MOEDAS>> $jsonMoedasBase");
       print("OUTRO JSON>> $jsonFinalAux");
     }
-
-    /*addJsonFinal(jsonMoedasBase);*/
   }
 
   @action
@@ -197,10 +217,6 @@ abstract class _GraficosStore with Store {
 
     print(" STRING QUE VAI PRO ENVIO >>>> $jsonEnvioMoedas");
   }
-
-  @action
-  void trocaVisibilidadeOpcoesGrafico(_value) =>
-      visibilidadeOpcoesGrafico = _value;
 
   @action
   void setTipoGrafico(_value) => tipoGrafico = _value;
@@ -249,6 +265,6 @@ abstract class _GraficosStore with Store {
   @action
   void setJsonTabela(_value) => jsonTabela = _value;
 
-   @action
+  @action
   void setJsonTabelaMedia(_value) => jsonTabelaMedia = _value;
 }
