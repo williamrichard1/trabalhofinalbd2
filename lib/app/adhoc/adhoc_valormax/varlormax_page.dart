@@ -25,6 +25,7 @@ class _ValorMaxPageState extends State<ValorMaxPage> {
     graficoStore.setMoedaBaseSelec('');
     graficoStore.setMoedaConversaoSelec('');
     valorMaxStore.controllerValorMaximo.clear();
+    graficoStore.setTipoGrafico(1);
 
     await GraficosFunctions(context).getListaMoedas();
   }
