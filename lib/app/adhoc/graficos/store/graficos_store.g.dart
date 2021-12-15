@@ -325,18 +325,19 @@ mixin _$GraficosStore on _GraficosStore, Store {
     });
   }
 
-  final _$jsonValorMaxAtom = Atom(name: '_GraficosStore.jsonValorMax');
+  final _$jsonTabelaValorMaxAtom =
+      Atom(name: '_GraficosStore.jsonTabelaValorMax');
 
   @override
-  dynamic get jsonValorMax {
-    _$jsonValorMaxAtom.reportRead();
-    return super.jsonValorMax;
+  dynamic get jsonTabelaValorMax {
+    _$jsonTabelaValorMaxAtom.reportRead();
+    return super.jsonTabelaValorMax;
   }
 
   @override
-  set jsonValorMax(dynamic value) {
-    _$jsonValorMaxAtom.reportWrite(value, super.jsonValorMax, () {
-      super.jsonValorMax = value;
+  set jsonTabelaValorMax(dynamic value) {
+    _$jsonTabelaValorMaxAtom.reportWrite(value, super.jsonTabelaValorMax, () {
+      super.jsonTabelaValorMax = value;
     });
   }
 
@@ -664,6 +665,17 @@ mixin _$GraficosStore on _GraficosStore, Store {
   }
 
   @override
+  void setJsonTabelaValorMax(dynamic _value) {
+    final _$actionInfo = _$_GraficosStoreActionController.startAction(
+        name: '_GraficosStore.setJsonTabelaValorMax');
+    try {
+      return super.setJsonTabelaValorMax(_value);
+    } finally {
+      _$_GraficosStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 listaDadosGrafico: ${listaDadosGrafico},
@@ -686,7 +698,7 @@ visibilidadeListaMoedas: ${visibilidadeListaMoedas},
 visibilidadeListaMoedas2: ${visibilidadeListaMoedas2},
 jsonTabela: ${jsonTabela},
 jsonTabelaMedia: ${jsonTabelaMedia},
-jsonValorMax: ${jsonValorMax},
+jsonTabelaValorMax: ${jsonTabelaValorMax},
 dataInicioTabela: ${dataInicioTabela},
 dataFimTabela: ${dataFimTabela},
 jsonEnvioMoedas: ${jsonEnvioMoedas}

@@ -341,7 +341,37 @@ class AdhocWidgets {
                   )
                 : graficosStoreT.listaSeriesValorMax.isNotEmpty &&
                         adhocStoreT.tipoAdhoc == 3
-                    ? Container()
+
+                    ///TODO: FINALIZAR GRAFICO 3
+                    ? Container(
+                        margin: EdgeInsets.symmetric(horizontal: 10),
+                        height: MediaQuery.of(context).size.height / 1.5,
+                        child: Center(
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: charts.BarChart(
+                                  graficosStoreT.listaSeriesValorMax,
+                                  animate: true,
+                                  barGroupingType:
+                                      charts.BarGroupingType.grouped,
+                                  vertical: false,
+                                  primaryMeasureAxis: charts.NumericAxisSpec(
+                                    tickProviderSpec:
+                                        charts.BasicNumericTickProviderSpec(
+                                            desiredTickCount: 3),
+                                  ),
+                                  secondaryMeasureAxis: charts.NumericAxisSpec(
+                                    tickProviderSpec:
+                                        charts.BasicNumericTickProviderSpec(
+                                            desiredTickCount: 3),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
                     : Container();
       },
     );
@@ -355,7 +385,7 @@ class AdhocWidgets {
             ? graficoStoreT.jsonTabela.length
             : adhocStore.tipoAdhoc == 2
                 ? graficoStoreT.jsonTabelaMedia.length
-                : graficoStoreT.jsonValorMax.length,
+                : graficoStoreT.jsonTabelaValorMax[0]['valores'].length,
         context);
     return Observer(
       builder: (_) {
@@ -407,7 +437,34 @@ class AdhocWidgets {
                       ),
                     ],
                   )
-                : Container();
+                : graficoStoreT.jsonTabelaValorMax != null &&
+                        adhocStore.tipoAdhoc == 3
+                    ? Row(
+                        ///TODO: FINALIZAR TABELA 3
+                        children: [
+                          Expanded(
+                            child: PaginatedDataTable(
+                              header: Text(
+                                'Média',
+                                style: TextStyle(
+                                  color:
+                                      GlobalsStyles(context).corPrimariaTexto,
+                                  fontSize:
+                                      GlobalsStyles(context).tamanhoTitulo,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              source: _dadosTabela,
+                              columns: [
+                                //colunas('M. Base'),
+                                colunas('Data'),
+                                colunas('Valor'),
+                              ],
+                            ),
+                          ),
+                        ],
+                      )
+                    : Container();
       },
     );
   }

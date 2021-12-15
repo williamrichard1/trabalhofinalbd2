@@ -103,7 +103,12 @@ class GraficosFunctions {
           print("JSON TABELA MEDIA>> ${graficosStore.jsonTabelaMedia}");
           graficosStore.setCarregandoPagina(false);
         } else {
-          print("TIPO 3");
+          graficosStore.setJsonTabelaValorMax(jsonData[0]);
+
+          ///TODO: FINALIZAR SETDADOSGRAFICO
+          //graficosStore.setDadosGraficoValorMax(jsonData[0]);
+          print("JSON TABELA VALOR MAX>> ${graficosStore.jsonTabelaValorMax}");
+          graficosStore.setCarregandoPagina(false);
         }
       } catch (e) {
         print("ERRO GET DADOS GRAFICO >>> $e");
