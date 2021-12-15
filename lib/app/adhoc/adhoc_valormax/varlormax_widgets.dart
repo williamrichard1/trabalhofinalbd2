@@ -20,14 +20,14 @@ class ValorMaxWidgets {
         return !adhocStoreT.gerouAdhoc
             ? Column(
                 children: [
-                  selecionaMoedaBase('Base'),
+                  /*selecionaMoedaBase('Base'),
                   SizedBox(
                     height: 30,
                   ),
                   listaMoedas('Base'),
                   SizedBox(
                     height: 10,
-                  ),
+                  ),*/
                   selecionaMoedaBase('Conversao'),
                   SizedBox(
                     height: 30,
@@ -36,13 +36,13 @@ class ValorMaxWidgets {
                   SizedBox(
                     height: 10,
                   ),
-                  AdhocWidgets(context).selecionaIntervalo(),
-                  SizedBox(
-                    height: 20,
-                  ),
                   digitaValorMax(),
                   SizedBox(
                     height: 30,
+                  ),
+                  AdhocWidgets(context).selecionaIntervalo(),
+                  SizedBox(
+                    height: 20,
                   ),
                   AdhocWidgets(context).botaoGerarAdhoc(),
                 ],

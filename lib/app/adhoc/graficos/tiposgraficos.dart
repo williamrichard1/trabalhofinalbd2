@@ -23,6 +23,21 @@ class DadosGraficoValorMax {
   DadosGraficoValorMax(this.moeda, this.valor);
 }
 
+class DadosGraficoValorMaxAux {
+  String nomeMoeda;
+  List<String> data;
+  List<double> listaValores = [];
+
+  DadosGraficoValorMaxAux(this.nomeMoeda, this.data, this.listaValores);
+}
+
+class TabelaValorMaxAux {
+  String nomeMoeda;
+  String data;
+  double valor;
+  TabelaValorMaxAux(this.nomeMoeda, this.data, this.valor);
+}
+
 class DadosTabelaAdhoc extends DataTableSource {
   int tamanhoJson;
   final int _selectRowCount = 0;
@@ -79,19 +94,14 @@ class DadosTabelaAdhoc extends DataTableSource {
                 ],
               )
             : DataRow.byIndex(
-                ///TODO: TABELA TIPO 3 CONTINUAR
                 index: index,
                 cells: [
-                  /*celulas(
-                    DateFormat('dd/MM/yyyy').format(DateTime.parse(
-                        graficoStoreT.jsonTabelaMedia['moeda_base'])),
-                  ),*/
+                  celulas(adhocStoreT.listaDadosTabelaAux[index].nomeMoeda),
                   celulas(
-                    DateFormat('dd/MM/yyyy').format(DateTime.parse(graficoStoreT
-                        .jsonTabelaValorMax['valores'][index]['data'])),
+                    DateFormat('dd/MM/yyyy').format(DateTime.parse(
+                        adhocStoreT.listaDadosTabelaAux[index].data)),
                   ),
-                  celulas(graficoStoreT.jsonTabelaValorMax['valores'][index]
-                      ['valor']),
+                  celulas("${adhocStoreT.listaDadosTabelaAux[index].valor}"),
                 ],
               );
   }
@@ -108,55 +118,3 @@ class DadosTabelaAdhoc extends DataTableSource {
     );
   }
 }
-
-/*class DadosTabelaMedia extends DataTableSource {
-  int tamanhoJson;
-  final int _selectRowCount = 0;
-  var formatCurrency = NumberFormat.decimalPattern();
-  BuildContext context;
-  DadosTabelaMedia(this.tamanhoJson, this.context);
-
-  @override
-  int get rowCount => tamanhoJson;
-
-  @override
-  bool get isRowCountApproximate => false;
-
-  @override
-  int get selectedRowCount => _selectRowCount;
-
-  @override
-  DataRow getRow(int index) {
-    final graficoStoreT = Provider.of<GraficosStore>(context, listen: true);
-    return DataRow.byIndex(
-      index: index,
-      cells: [
-        celulas(
-          DateFormat('dd/MM/yyyy').format(
-              DateTime.parse(graficoStoreT.jsonTabelaMedia[index]['inicio'])),
-        ),
-        celulas(
-          DateFormat('dd/MM/yyyy').format(
-              DateTime.parse(graficoStoreT.jsonTabelaMedia[index]['fim'])),
-        ),
-        celulas("${graficoStoreT.jsonTabelaMedia[index]['moeda_base']}"),
-        /*celulas("${graficoStoreT.jsonTabela[index]['moeda_conversao']}"),*/
-        celulas(
-          '${graficoStoreT.jsonTabelaMedia[index]['valores']}',
-        ),
-      ],
-    );
-  }
-
-  DataCell celulas(String dadoCelula) {
-    return DataCell(
-      Text(
-        dadoCelula,
-        style: TextStyle(
-          color: GlobalsStyles(context).corPrimariaTexto,
-          fontSize: GlobalsStyles(context).tamanhoTextoMedio,
-        ),
-      ),
-    );
-  }
-}*/

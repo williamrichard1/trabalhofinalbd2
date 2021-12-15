@@ -290,6 +290,10 @@ class AdhocWidgets {
     );
   }
 
+  Widget graficoDiferente() {
+    return Container();
+  }
+
   Widget _graficoAdhoc() {
     final graficosStoreT = Provider.of<GraficosStore>(context, listen: true);
     final adhocStoreT = Provider.of<AdhocStore>(context, listen: true);
@@ -330,6 +334,12 @@ class AdhocWidgets {
                             child: charts.BarChart(
                               graficosStoreT.listaSeriesMedia,
                               animate: true,
+                              primaryMeasureAxis: charts.NumericAxisSpec(
+                                tickProviderSpec:
+                                    charts.BasicNumericTickProviderSpec(
+                                  desiredTickCount: 10,
+                                ),
+                              ),
                               domainAxis: charts.OrdinalAxisSpec(
                                 showAxisLine: true,
                               ),
@@ -341,8 +351,6 @@ class AdhocWidgets {
                   )
                 : graficosStoreT.listaSeriesValorMax.isNotEmpty &&
                         adhocStoreT.tipoAdhoc == 3
-
-                    ///TODO: FINALIZAR GRAFICO 3
                     ? Container(
                         margin: EdgeInsets.symmetric(horizontal: 10),
                         height: MediaQuery.of(context).size.height / 1.5,
@@ -351,21 +359,19 @@ class AdhocWidgets {
                             children: [
                               Expanded(
                                 child: charts.BarChart(
-                                  graficosStoreT.listaSeriesValorMax,
+                                  graficosStoreT.listaSeriesValorAux,
                                   animate: true,
-                                  barGroupingType:
-                                      charts.BarGroupingType.grouped,
-                                  vertical: false,
                                   primaryMeasureAxis: charts.NumericAxisSpec(
                                     tickProviderSpec:
                                         charts.BasicNumericTickProviderSpec(
-                                            desiredTickCount: 3),
+                                      desiredTickCount: 10,
+                                    ),
                                   ),
-                                  secondaryMeasureAxis: charts.NumericAxisSpec(
-                                    tickProviderSpec:
-                                        charts.BasicNumericTickProviderSpec(
-                                            desiredTickCount: 3),
+                                  domainAxis: charts.OrdinalAxisSpec(
+                                    showAxisLine: true,
                                   ),
+                                  barGroupingType:
+                                      charts.BarGroupingType.grouped,
                                 ),
                               ),
                             ],
@@ -385,7 +391,7 @@ class AdhocWidgets {
             ? graficoStoreT.jsonTabela.length
             : adhocStore.tipoAdhoc == 2
                 ? graficoStoreT.jsonTabelaMedia.length
-                : graficoStoreT.jsonTabelaValorMax[0]['valores'].length,
+                : adhocStore.listaDadosTabelaAux.length,
         context);
     return Observer(
       builder: (_) {
@@ -437,10 +443,9 @@ class AdhocWidgets {
                       ),
                     ],
                   )
-                : graficoStoreT.jsonTabelaValorMax != null &&
+                : adhocStore.listaDadosTabelaAux.isNotEmpty &&
                         adhocStore.tipoAdhoc == 3
                     ? Row(
-                        ///TODO: FINALIZAR TABELA 3
                         children: [
                           Expanded(
                             child: PaginatedDataTable(
@@ -456,7 +461,7 @@ class AdhocWidgets {
                               ),
                               source: _dadosTabela,
                               columns: [
-                                //colunas('M. Base'),
+                                colunas('M. Base'),
                                 colunas('Data'),
                                 colunas('Valor'),
                               ],

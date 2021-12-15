@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:trabalhofinalbd2/app/adhoc/adhoc_functions.dart';
 import 'package:trabalhofinalbd2/app/adhoc/adhoc_valormax/store/valormax_store.dart';
 import 'package:trabalhofinalbd2/app/adhoc/graficos/store/graficos_store.dart';
 import 'package:trabalhofinalbd2/app/adhoc/store/adhoc_store.dart';
@@ -87,7 +88,7 @@ class GraficosFunctions {
               cotacaoMoedaStore.intervaloData!.start,
             )}&fim=${DateFormat('yyyy-MM-dd').format(
               cotacaoMoedaStore.intervaloData!.end,
-            )}&moeda_conversao=${graficosStore.moedaConversaoSelec}&moeda_base1=${graficosStore.jsonEnvioMoedas}&tipo_adhoc=${adhocStore.tipoAdhoc}&valor_max=${valorMaxStore.controllerValorMaximo.text}'),
+            )}&moeda_conversao=${graficosStore.moedaConversaoSelec}&tipo_adhoc=${adhocStore.tipoAdhoc}&valor_max=${valorMaxStore.controllerValorMaximo.text}'),
           );
         }
         var jsonData = await json.decode(request.body);
@@ -103,10 +104,10 @@ class GraficosFunctions {
           print("JSON TABELA MEDIA>> ${graficosStore.jsonTabelaMedia}");
           graficosStore.setCarregandoPagina(false);
         } else {
-          graficosStore.setJsonTabelaValorMax(jsonData[0]);
+          print('JSONDATA REQ>> $jsonData');
+          await AdhocFunctions(context).montaListaValorAux(jsonData);
+          AdhocFunctions(context).criaDadosValorMax();
 
-          ///TODO: FINALIZAR SETDADOSGRAFICO
-          //graficosStore.setDadosGraficoValorMax(jsonData[0]);
           print("JSON TABELA VALOR MAX>> ${graficosStore.jsonTabelaValorMax}");
           graficosStore.setCarregandoPagina(false);
         }

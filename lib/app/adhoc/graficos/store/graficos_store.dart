@@ -38,6 +38,9 @@ abstract class _GraficosStore with Store {
   List<charts.Series<DadosGraficoValorMax, String>> listaSeriesValorMax = [];
 
   @observable
+  List<charts.Series<DadosGraficoValorMax, String>> listaSeriesValorAux = [];
+
+  @observable
   bool carregandoPagina = true;
 
   @observable

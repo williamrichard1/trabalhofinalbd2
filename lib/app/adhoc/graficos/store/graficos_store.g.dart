@@ -106,6 +106,23 @@ mixin _$GraficosStore on _GraficosStore, Store {
     });
   }
 
+  final _$listaSeriesValorAuxAtom =
+      Atom(name: '_GraficosStore.listaSeriesValorAux');
+
+  @override
+  List<charts.Series<DadosGraficoValorMax, String>> get listaSeriesValorAux {
+    _$listaSeriesValorAuxAtom.reportRead();
+    return super.listaSeriesValorAux;
+  }
+
+  @override
+  set listaSeriesValorAux(
+      List<charts.Series<DadosGraficoValorMax, String>> value) {
+    _$listaSeriesValorAuxAtom.reportWrite(value, super.listaSeriesValorAux, () {
+      super.listaSeriesValorAux = value;
+    });
+  }
+
   final _$carregandoPaginaAtom = Atom(name: '_GraficosStore.carregandoPagina');
 
   @override
@@ -684,6 +701,7 @@ listaDadosGraficoValorMax: ${listaDadosGraficoValorMax},
 listaSeries: ${listaSeries},
 listaSeriesMedia: ${listaSeriesMedia},
 listaSeriesValorMax: ${listaSeriesValorMax},
+listaSeriesValorAux: ${listaSeriesValorAux},
 carregandoPagina: ${carregandoPagina},
 dataInicioGrafico: ${dataInicioGrafico},
 dataFimGrafico: ${dataFimGrafico},
