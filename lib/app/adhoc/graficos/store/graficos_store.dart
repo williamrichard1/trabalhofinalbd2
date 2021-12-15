@@ -80,7 +80,7 @@ abstract class _GraficosStore with Store {
   dynamic jsonTabelaMedia;
 
   @observable
-  dynamic jsonValorMax;
+  dynamic jsonTabelaValorMax;
 
   @observable
   String dataInicioTabela = '';
@@ -267,4 +267,7 @@ abstract class _GraficosStore with Store {
 
   @action
   void setJsonTabelaMedia(_value) => jsonTabelaMedia = _value;
+
+  @action
+  void setJsonTabelaValorMax(_value) => jsonTabelaValorMax = _value;
 }

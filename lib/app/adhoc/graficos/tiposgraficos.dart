@@ -59,23 +59,41 @@ class DadosTabelaAdhoc extends DataTableSource {
               ),
             ],
           )
-        : DataRow.byIndex(
-            index: index,
-            cells: [
-              celulas(
-                DateFormat('dd/MM/yyyy').format(DateTime.parse(
-                    graficoStoreT.jsonTabelaMedia[index]['inicio'])),
-              ),
-              celulas(
-                DateFormat('dd/MM/yyyy').format(DateTime.parse(
-                    graficoStoreT.jsonTabelaMedia[index]['fim'])),
-              ),
-              celulas("${graficoStoreT.jsonTabelaMedia[index]['moeda_base']}"),
-              celulas(
-                '${graficoStoreT.jsonTabelaMedia[index]['valores']}',
-              ),
-            ],
-          );
+        : adhocStoreT.tipoAdhoc == 2
+            ? DataRow.byIndex(
+                index: index,
+                cells: [
+                  celulas(
+                    DateFormat('dd/MM/yyyy').format(DateTime.parse(
+                        graficoStoreT.jsonTabelaMedia[index]['inicio'])),
+                  ),
+                  celulas(
+                    DateFormat('dd/MM/yyyy').format(DateTime.parse(
+                        graficoStoreT.jsonTabelaMedia[index]['fim'])),
+                  ),
+                  celulas(
+                      "${graficoStoreT.jsonTabelaMedia[index]['moeda_base']}"),
+                  celulas(
+                    '${graficoStoreT.jsonTabelaMedia[index]['valores']}',
+                  ),
+                ],
+              )
+            : DataRow.byIndex(
+                ///TODO: TABELA TIPO 3 CONTINUAR
+                index: index,
+                cells: [
+                  /*celulas(
+                    DateFormat('dd/MM/yyyy').format(DateTime.parse(
+                        graficoStoreT.jsonTabelaMedia['moeda_base'])),
+                  ),*/
+                  celulas(
+                    DateFormat('dd/MM/yyyy').format(DateTime.parse(graficoStoreT
+                        .jsonTabelaValorMax['valores'][index]['data'])),
+                  ),
+                  celulas(graficoStoreT.jsonTabelaValorMax['valores'][index]
+                      ['valor']),
+                ],
+              );
   }
 
   DataCell celulas(String dadoCelula) {
